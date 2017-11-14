@@ -1,0 +1,113 @@
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="/images/logo_128.png" type="image/png">
+    <!--qq登录验证用-->
+    <meta property="qc:admins" content="5455006266715655"/>
+    <!--ios-->
+            <meta name="apple-itunes-app" content="app-id=933524040, app-argument=tongqu:">
+        <!-- force ie to use the newest engine,and duo core to use chrome -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+        <meta name="keywords"
+          content="大学生,活动,上海活动,上海大学生,上海同城,电影,社团,大学生社团,同去"/>
+    <meta name="description" content="同去网是东岳网络工作室开发和维护、服务于高校校园团队的互联网产品，为团队提供包括讲座、比赛、旅游、招新、电影、演出等活动的发布和报名服务，并提供高效的团队管理功能，为高校学生提供可浏览丰富校园活动的网络平台。"/>
+
+    <title>同去网</title>
+   <link href="https://tongqu.me/dist/lib/css/bootstrap.min-f5a856fc.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/lib/css/font-awesome.min-512c7d79.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/base/style/act-10540592.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/base/style/button-bd2f8df1.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/base/style/color-ab6eb4c4.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/base/style/general-baee1fc0.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/base/style/layout-2785080e.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/base/style/message-da39a3ee.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/base/style/modal-c52c3443.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/base/style/nav-958d492e.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/base/style/page-0601412f.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/base/style/team-bcd3cb9f.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/tqavatar/tqavatar-aa8cf7f3.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/tabSlide/tab_slide-e38de95e.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/gridAct/gridAct-c8c246af.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/tqCarousel/tqCarousel-592e2c9d.css" rel="stylesheet" media="screen">
+                    <link href="https://tongqu.me/dist/page_home_act/home_act-8a35a822.css" rel="stylesheet" media="screen">
+
+    <script>
+        "use strict";
+        var g_url = {};
+        g_url.site_url = function (url) {
+            var site_url = "https://tongqu.me/";// http://tongqu.me/index.php
+            // rtrim the '/'
+            if (site_url.charAt(site_url.length - 1) === '/') {
+                site_url = site_url.substring(0, site_url.length - 1);
+            }
+            // ltrim the '/'
+            if (url.indexOf('/') === 0) {
+                url = url.substr(1);
+            }
+            return site_url + '/' + url;
+        };
+
+        g_url.base_url = function (url) {
+            var base_url = "https://tongqu.me/";// http://tongqu.me/
+            if (url.indexOf('/') === 0) {
+                url = url.substr(1);
+            }
+            return base_url + url;
+        };
+
+    </script>
+
+
+</head>
+
+<body class="dy-skin-default" ng-app="tqApp">
+<!-- the js var eg:ueditor URL-->
+<!-- end of js var-->
+<div id="global-nav" class="navbar navbar-default navbar-fixed-top" ng-controller="MainNavCtrl" >
+    <div class="nav-content">
+        <div class="nav navbar-nav navbar-header">
+            
+            <li>
+                <a href="/" style="text-decoration:none">同去</a>
+            </li>
+        </div>
+        <ul class="nav navbar-nav navbar-left">
+            <li dropdown>
+                <a href="/act/type" ng-class="{'active': nav == 'act'}">活动</a>
+                <ul class="dropdown-menu dropdown-nav" role="menu">
+                    <li ng-repeat="type in actTypes">
+                        <a ng-href="/act/type?type={{type.typeid}}" ng-bind="type.typename"></a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="/team/browse" ng-class="{'active': nav == 'team'}">团队</a>
+            </li>
+                        <li>
+                <a href="/app" ng-class="{'active': nav == 'app'}">客户端
+<!--                    <span class="badge bg-red">&nbsp;New!&nbsp;</span>-->
+                </a>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" ng-if="!userService.isLogin">
+            <li>
+                <a href="/user/login">登录</a>
+            </li>
+            <li ng-hide="userService.isLogin">
+                <a href="/user/register/mobile">注册</a>
+            </li>
+        </ul>
+        <ul id="nav-user" class="nav navbar-nav navbar-right" ng-if="userService.isLogin">
+            <li dropdown on-toggle="redirect('/user/home', open)">
+                <a class="dropdown-toggle" href="/user/home">
+                    <i class="fa fa-user-circle"></i>
+             
+                </a>
+                <ul id="user-setting" class="dropdown-menu dropdown-nav" role="menu">
+                    <li><a href="/user/home">个人中心</a></li>
+                    <li><a href="/user/logout">退出登录</a></li>
+                </ul>
+            </li>
+        </script>
+    </body>
+    </html>
