@@ -76,7 +76,20 @@ export default {
     }
   },
   mounted: function(){
-
+    var that = this
+    this.$axios.get('/api/isLogin')
+        .then(function (response) {
+          var data = response.data;
+          if(data) {
+            that.userState = data.username
+            that.isLogin = true;
+          } else {
+            that.isLogin = false;
+          }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
   },
   methods: {
     clickToLogin: function() {
