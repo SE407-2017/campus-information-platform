@@ -32,6 +32,8 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
+        // 配置代理服务器
+        // 启动后端时一定要php -S 127.0.0.1:端口（不能用localhost），否则代理竟然出错，好坑！！！
         "/api":{
             target: "http://localhost:8086",
             changeOrigin: true,

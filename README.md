@@ -90,7 +90,7 @@ Laravel我觉得看官方教程就行了 [http://laravelacademy.org/laravel-docs
 	
 	// 确保之前已经完成安装依赖包以及生成app_key
 	cd 目录 (public目录下)
-	php -S localhost:端口
+	php -S 127.0.0.1:端口
 
 ## 功能
 
