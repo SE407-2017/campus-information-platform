@@ -1,72 +1,13 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <meta charset="utf-8">
-    <title>school-info</title>
-
-    			<!-- the add-on css  -->
-	<link href="https://tongqu.me/dist/lib/css/bootstrap.min-f5a856fc.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/lib/css/font-awesome.min-512c7d79.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/base/style/act-10540592.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/base/style/button-bd2f8df1.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/base/style/color-ab6eb4c4.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/base/style/general-baee1fc0.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/base/style/layout-2785080e.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/base/style/message-da39a3ee.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/base/style/modal-c52c3443.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/base/style/nav-958d492e.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/base/style/page-0601412f.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/base/style/team-bcd3cb9f.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/tqavatar/tqavatar-aa8cf7f3.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/tabSlide/tab_slide-e38de95e.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/gridAct/gridAct-c8c246af.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/tqCarousel/tqCarousel-592e2c9d.css" rel="stylesheet" media="screen">
-	<link href="https://tongqu.me/dist/page_home_act/home_act-8a35a822.css" rel="stylesheet" media="screen">
-                <!-- end of add-on css  -->
-
+    <meta charset="utf-8" name="viewport" content="width=device-width,initial-scale=1.0,maximun-scale=1.0,minimum-scale=1.0,user-scalable=no">
+    <title>campus-information-platform</title>
+    <!-- <link rel="stylesheet" type="text/css" href="./static/css/reset.css"> -->
   </head>
-
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
-	<div id="global-nav" class="navbar navbar-default navbar-fixed-top" ng-controller="MainNavCtrl" >
-    	<div class="nav-content">
-        	<div class="nav navbar-nav navbar-header">
-    	        <li>
-    	            <a href="/" style="text-decoration:none">校园信息平台</a>
-    	        </li>
-    	    </div>
-    	    <ul class="nav navbar-nav navbar-left">
-    	        <li dropdown>
-    	            <a href="/" ng-class="{'active': nav == 'act'}">活动</a>
-    	    		<ul class="dropdown-menu dropdown-nav" role="menu">
-     	               	<li ng-repeat="type in actTypes">
-     	                	<a ng-href="/act/type?type={{type.typeid}}" ng-bind="type.typename"></a>
-      	              	</li>
-      	          	</ul>
-     	       	</li>
-     	       	<li>
-       	         	<a href="/" ng-class="{'active': nav == 'team'}">团队</a>
-        	    </li>
-                <li>
-                	<a href="/" ng-class="{'active': nav == 'app'}">客户端
-
-                	</a>
-            	</li>
-        	</ul>
-        	<ul class="nav navbar-nav navbar-right" ng-if="!userService.isLogin">
-            <li>
-                <a href="/">登录</a>
-            </li>
-            <li ng-hide="userService.isLogin">
-                <a href="/">注册</a>
-            </li>
-        	</ul>
-        </div>
-    </div>
-	</div>
-
-
   </body>
 </html>
