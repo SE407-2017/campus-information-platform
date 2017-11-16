@@ -1,6 +1,6 @@
 <template>
 <div class="header">
-    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect" background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+    <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"  background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
       <div class="title-wrapper">
         <el-menu-item index="1" @click.prevent.self class="title">校园信息平台</el-menu-item>
       </div>
@@ -9,10 +9,10 @@
         <el-menu-item index="2">活动</el-menu-item>
       </div>
       <div class="search-wrapper">
-          <el-input v-model="input" placeholder="请输入内容" class="input"></el-input>
+          <el-input v-model="input" placeholder="请输入内容"></el-input>
       </div>
       <div class="state-wrapper">
-          <el-menu-item index="3">登录</el-menu-item>
+          <el-menu-item index="3" @click="login">登录</el-menu-item>
           <el-menu-item index="4">注册</el-menu-item>
           <el-menu-item index="5">注销</el-menu-item>
       </div>
@@ -25,13 +25,20 @@ export default {
   name: 'HelloWorld',
   data () {
     return {
-       activeIndex: '2'
+       activeIndex: '2',
+       input: ""
     }
   },
   methods: {
-     handleSelect(key, keyPath) {
-        console.log(key, keyPath);
-      }
+    login: function() {
+        this.$axios.get("/api/activity/read")
+        .then(function (response) {
+            console.log(response);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
   }
 }
 </script>
