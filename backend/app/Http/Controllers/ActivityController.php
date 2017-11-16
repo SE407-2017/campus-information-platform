@@ -13,6 +13,7 @@ class ActivityController extends BaseController
     public function add(Request $request){
         // $this->isLogin()调用父控制器的方法
         // 检查用户是否登录
+        // dd($this->isLogin()["user_id"]);
         if($this->isLogin()) {
              $new_activity = new Activity;
              $new_activity->title = $request->title;

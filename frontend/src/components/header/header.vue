@@ -75,6 +75,9 @@ export default {
         }
     }
   },
+  mounted: function(){
+
+  },
   methods: {
     clickToLogin: function() {
         this.login = true;
