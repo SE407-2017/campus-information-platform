@@ -77,6 +77,7 @@ export default {
   },
   mounted: function(){
     var that = this
+    // render之前先判断一下session中是否有用户已经登录
     this.$axios.get('/api/isLogin')
         .then(function (response) {
           var data = response.data;
@@ -137,16 +138,32 @@ export default {
     },
     onSignupSubmit() {
         var that = this
+        var form_username = this.signupform.username;
+        var form_password = this.signupform.password;
         this.$axios.get('/api/user/signup',{
             params: {
-                username: this.signupform.username,
-                password: this.signupform.password
+                username: form_username,
+                password: form_password
             }
         })
         .then(function (response) {
            if(response.data.status == 1){
-                that.userState = response.data.msg;
-                that.isLogin = true;
+                // 注册成功后自动登录
+                that.$axios.get('/api/user/login',{
+                    params: {
+                        username: form_username,
+                        password: form_password
+                    }
+                })
+                .then(function (response) {
+                   if(response.data.status == 1){
+                        that.userState = response.data.msg;
+                        that.isLogin = true;
+                   }
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
            }
         })
         .catch(function (error) {
