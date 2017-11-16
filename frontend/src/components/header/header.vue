@@ -13,9 +13,9 @@
               <el-input v-model="input" placeholder="请输入内容"></el-input>
           </div>
           <div class="state-wrapper">
-              <el-menu-item index="3" @click="login">登录</el-menu-item>
+              <el-menu-item index="3" @click="login">{{userState}}</el-menu-item>
+              <el-menu-item index="5" v-show="isLogin">注销</el-menu-item>
               <el-menu-item index="4">注册</el-menu-item>
-              <el-menu-item index="5">注销</el-menu-item>
           </div>
         </el-menu>
     </div>
@@ -46,6 +46,8 @@ export default {
        activeIndex: '2',
        input: "",
        clickToLogin: false,
+       userState: "登录",
+       isLogin: false,
        form: {
           username: "",
           password: ""
@@ -57,6 +59,7 @@ export default {
         this.clickToLogin = true;
     },
     onSubmit() {
+        var that = this
         this.$axios.get('/api/user/login',{
             params: {
                 username: this.form.username,
@@ -65,7 +68,8 @@ export default {
         })
         .then(function (response) {
            if(response.data.status == 1){
-                alert("login succeed")
+                that.userState = "liang";
+                that.isLogin = true;
            }
         })
         .catch(function (error) {
