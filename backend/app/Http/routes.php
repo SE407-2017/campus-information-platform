@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test',"BaseController@isLogin");
+Route::get('isLogin',"BaseController@isLogin");
 
 // 用户路由
 Route::group(['prefix' => 'api/user'], function () {

@@ -15,37 +15,38 @@
           <div class="state-wrapper">
               <el-menu-item index="3" @click="clickToLogin">{{userState}}</el-menu-item>
               <el-menu-item index="5" v-show="isLogin" @click="clickToLogout">注销</el-menu-item>
-              <el-menu-item index="4" @click="clickTosignup">注册</el-menu-item>
+              <el-menu-item index="4" @click="clickToSignup">注册</el-menu-item>
+              <el-menu-item index="4" @click="testapi">测试</el-menu-item>
           </div>
         </el-menu>
     </div>
 
     <div class="loginform-wrapper" v-show="login">
-        <el-form ref="form" :model="form" label-width="80px">
+        <el-form ref="form" :model="loginform" label-width="80px">
             <el-form-item label="用户名">
-                <el-input v-model="form.username"></el-input>
+                <el-input v-model="loginform.username"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-                <el-input v-model="form.password"></el-input>
+                <el-input v-model="loginform.password"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onLoginSubmit">登录</el-button>
-                <el-button>取消</el-button>
+                <el-button @click="cancelLogin">取消</el-button>
             </el-form-item>
         </el-form>
     </div>
 
     <div class="signupform-wrapper" v-show="signup">
-        <el-form ref="form" :model="form" label-width="80px">
+        <el-form ref="form" :model="signupform" label-width="80px">
             <el-form-item label="用户名">
-                <el-input v-model="form.username"></el-input>
+                <el-input v-model="signupform.username"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-                <el-input v-model="form.password"></el-input>
+                <el-input v-model="signupform.password"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSignupSubmit">注册</el-button>
-                <el-button>取消</el-button>
+                <el-button @click="cancelSignup">取消</el-button>
             </el-form-item>
         </el-form>
     </div>
@@ -64,7 +65,11 @@ export default {
        signup: false,
        userState: "登录",
        isLogin: false,
-       form: {
+       loginform: {
+          username: "",
+          password: ""
+        },
+       signupform: {
           username: "",
           password: ""
         }
@@ -73,6 +78,9 @@ export default {
   methods: {
     clickToLogin: function() {
         this.login = true;
+    },
+    cancelLogin: function() {
+        this.login = false;
     },
     clickToLogout: function() {
         var that = this
@@ -87,15 +95,18 @@ export default {
           console.log(error);
         });
     },
-    clickTosignup: function(){
+    clickToSignup: function(){
         this.signup = true;
+    },
+    cancelSignup: function(){
+        this.signup = false;
     },
     onLoginSubmit() {
         var that = this
         this.$axios.get('/api/user/login',{
             params: {
-                username: this.form.username,
-                password: this.form.password
+                username: this.loginform.username,
+                password: this.loginform.password
             }
         })
         .then(function (response) {
@@ -112,8 +123,8 @@ export default {
         var that = this
         this.$axios.get('/api/user/signup',{
             params: {
-                username: this.form.username,
-                password: this.form.password
+                username: this.signupform.username,
+                password: this.signupform.password
             }
         })
         .then(function (response) {
@@ -121,6 +132,15 @@ export default {
                 that.userState = response.data.msg;
                 that.isLogin = true;
            }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    testapi() {
+        this.$axios.get('/api/activity/add?title=test')
+        .then(function (response) {
+           console.log(response.data)
         })
         .catch(function (error) {
           console.log(error);

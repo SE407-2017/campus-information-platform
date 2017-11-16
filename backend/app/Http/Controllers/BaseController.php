@@ -11,8 +11,9 @@ class BaseController extends Controller
         验证用户是否登录
      */
     public function isLogin(){
-        if (session("user_id"))
-            return session("user_id");
+        if (session("user_id")){
+            return ["username" => session("username"),"user_id" => session("user_id")];
+        }
         else
             return 0;
     }
