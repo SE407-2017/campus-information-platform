@@ -13,14 +13,14 @@
               <el-input v-model="input" placeholder="请输入内容"></el-input>
           </div>
           <div class="state-wrapper">
-              <el-menu-item index="3" @click="login">{{userState}}</el-menu-item>
-              <el-menu-item index="5" v-show="isLogin">注销</el-menu-item>
-              <el-menu-item index="4">注册</el-menu-item>
+              <el-menu-item index="3" @click="clickToLogin">{{userState}}</el-menu-item>
+              <el-menu-item index="5" v-show="isLogin" @click="clickToLogout">注销</el-menu-item>
+              <el-menu-item index="4" @click="clickTosignup">注册</el-menu-item>
           </div>
         </el-menu>
     </div>
 
-    <div class="loginform-wrapper" v-show="clickToLogin">
+    <div class="loginform-wrapper" v-show="login">
         <el-form ref="form" :model="form" label-width="80px">
             <el-form-item label="用户名">
                 <el-input v-model="form.username"></el-input>
@@ -29,7 +29,22 @@
                 <el-input v-model="form.password"></el-input>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="onSubmit">登录</el-button>
+                <el-button type="primary" @click="onLoginSubmit">登录</el-button>
+                <el-button>取消</el-button>
+            </el-form-item>
+        </el-form>
+    </div>
+
+    <div class="signupform-wrapper" v-show="signup">
+        <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="用户名">
+                <el-input v-model="form.username"></el-input>
+            </el-form-item>
+            <el-form-item label="密码">
+                <el-input v-model="form.password"></el-input>
+            </el-form-item>
+            <el-form-item>
+                <el-button type="primary" @click="onSignupSubmit">注册</el-button>
                 <el-button>取消</el-button>
             </el-form-item>
         </el-form>
@@ -45,7 +60,8 @@ export default {
     return {
        activeIndex: '2',
        input: "",
-       clickToLogin: false,
+       login: false,
+       signup: false,
        userState: "登录",
        isLogin: false,
        form: {
@@ -55,10 +71,26 @@ export default {
     }
   },
   methods: {
-    login: function() {
-        this.clickToLogin = true;
+    clickToLogin: function() {
+        this.login = true;
     },
-    onSubmit() {
+    clickToLogout: function() {
+        var that = this
+        this.$axios.get('/api/user/logout')
+        .then(function (response) {
+           if(response.data.status == 1){
+                that.userState = "登录";
+                that.isLogin = false;
+           }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    clickTosignup: function(){
+        this.signup = true;
+    },
+    onLoginSubmit() {
         var that = this
         this.$axios.get('/api/user/login',{
             params: {
@@ -68,7 +100,25 @@ export default {
         })
         .then(function (response) {
            if(response.data.status == 1){
-                that.userState = "liang";
+                that.userState = response.data.msg;
+                that.isLogin = true;
+           }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
+    onSignupSubmit() {
+        var that = this
+        this.$axios.get('/api/user/signup',{
+            params: {
+                username: this.form.username,
+                password: this.form.password
+            }
+        })
+        .then(function (response) {
+           if(response.data.status == 1){
+                that.userState = response.data.msg;
                 that.isLogin = true;
            }
         })
@@ -102,7 +152,7 @@ export default {
         .state-wrapper
            display: inline-block
            float: right 
-    .loginform-wrapper
+    .loginform-wrapper,.signupform-wrapper
         position: relative
         top: 100px
         margin: auto auto
