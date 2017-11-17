@@ -3,7 +3,7 @@
     <div class="header-wrapper">
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"  background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
           <div class="title-wrapper">
-            <el-menu-item index="1" @click.prevent.self class="title">校园信息平台</el-menu-item>
+            <el-menu-item index="1" class="title">校园信息平台</el-menu-item>
           </div>
           <!-- <el-menu-item index="2"></el-menu-item> -->
           <div class="menu-wrapper">
@@ -139,7 +139,7 @@ export default {
         })
         .then(function (response) {
            if(response.data.status == 1){
-                that.userState = response.data.msg;
+                that.userState = response.data.username;
                 that.isLogin = true;
                 that.success(LOGIN);
            } else{
