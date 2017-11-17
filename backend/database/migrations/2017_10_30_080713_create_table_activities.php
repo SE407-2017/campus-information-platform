@@ -16,9 +16,10 @@ class CreateTableActivities extends Migration
             $table->increments('id');
             $table->string("title",64);
             $table->text("desc")->nullable()->comment("description");
+            $table->string("time",64);
+            $table->string("place",64);
             $table->integer('user_id');
             $table->timestamps();
-
             $table->foreign("user_id")->references("id")->on('users');
         });
     }

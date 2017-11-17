@@ -18,6 +18,8 @@ class ActivityController extends BaseController
              $new_activity = new Activity;
              $new_activity->title = $request->title;
              $new_activity->desc = $request->desc;
+             $new_activity->time = $request->time;
+             $new_activity->place = $request->place;
              $new_activity->user_id = session("user_id");
              return $new_activity->save()?
                  ["status" => 1,"msg" => "create activities succeed"]:

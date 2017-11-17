@@ -9,41 +9,6 @@
                 <div class="place">城市：上海</div>
             </div>   
         </div>
-
-        <div class="activity-item">
-            <div class="avatar"></div>
-            <div class="content">
-                <div class="title">运营修炼之道</div>
-                <div class="time">时间：2017-11-22 周三</div>
-                <div class="place">城市：上海</div>
-            </div>   
-        </div>
-        <div class="activity-item">
-            <div class="avatar"></div>
-            <div class="content">
-                <div class="title">运营修炼之道</div>
-                <div class="time">时间：2017-11-22 周三</div>
-                <div class="place">城市：上海</div>
-            </div>   
-        </div>
-        <div class="activity-item">
-            <div class="avatar"></div>
-            <div class="content">
-                <div class="title">运营修炼之道</div>
-                <div class="time">时间：2017-11-22 周三</div>
-                <div class="place">城市：上海</div>
-            </div>   
-        </div>
-
-        <div class="activity-item">
-            <div class="avatar"></div>
-            <div class="content">
-                <div class="title">运营修炼之道</div>
-                <div class="time">时间：2017-11-22 周三</div>
-                <div class="place">城市：上海</div>
-            </div>   
-        </div>
-
      </div>
   </div>
 </template>
@@ -51,11 +16,17 @@
 <script>
 export default {
   name: 'activity',
+  data(){
+    return {
+        activityArr: []
+    }
+  },
   mounted: function(){
     var that = this
     this.$axios.get('/api/activity/read')
         .then(function (response) {
-            console.log(response)
+            that.activityArr = response.data.data
+            console.log(that.activityArr)
         })
         .catch(function (error) {
           console.log(error);
