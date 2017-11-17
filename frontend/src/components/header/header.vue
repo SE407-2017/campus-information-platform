@@ -51,6 +51,13 @@
         </el-form>
     </div>
 
+    <div class="message-wrapper">
+        <el-button :plain="true" @click="success(index)"></el-button>
+        <el-button :plain="true" @click="error(index)"></el-button>
+        <!-- <el-button :plain="true" @click="open3"></el-button> -->
+        <!-- <el-button :plain="true" @click="open4"></el-button> -->
+    </div>
+
 </div>
 </template>
 
@@ -130,7 +137,11 @@ export default {
            if(response.data.status == 1){
                 that.userState = response.data.msg;
                 that.isLogin = true;
+                that.success(1);
+           } else{
+                that.error(response.data.msg);
            }
+
         })
         .catch(function (error) {
           console.log(error);
@@ -148,6 +159,7 @@ export default {
         })
         .then(function (response) {
            if(response.data.status == 1){
+                that.success(2);
                 // 注册成功后自动登录
                 that.$axios.get('/api/user/login',{
                     params: {
@@ -164,6 +176,8 @@ export default {
                 .catch(function (error) {
                   console.log(error);
                 });
+           } else {
+               that.error(response.data.msg)
            }
         })
         .catch(function (error) {
@@ -178,7 +192,25 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    success(index) {
+        if(index == 1){
+            this.$message({
+              message: '登陆成功',
+              type: 'success'
+            });
+        } else if (index == 2) {
+            this.$message({
+              message: '注册成功',
+              type: 'success'
+            });
+        }
+
+    },
+    error(msg) {
+        this.$message.error(msg)
     }
+
   }
 }
 </script>
@@ -211,5 +243,8 @@ export default {
         margin: auto auto
         width: 50%
         z-index: 2
+    .message-wrapper
+        display: none
+
         
 </style>
