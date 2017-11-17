@@ -22,12 +22,13 @@
     </div>
 
     <div class="loginform-wrapper" v-show="login">
-        <el-form ref="form" :model="loginform" label-width="80px">
+        <div class="title">登录</div>
+        <el-form ref="form" class="form" :model="loginform" label-width="80px">
             <el-form-item label="用户名">
                 <el-input v-model="loginform.username"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-                <el-input v-model="loginform.password"></el-input>
+                <el-input v-model="loginform.password"  type="password"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onLoginSubmit">登录</el-button>
@@ -37,12 +38,13 @@
     </div>
 
     <div class="signupform-wrapper" v-show="signup">
-        <el-form ref="form" :model="signupform" label-width="80px">
+        <div class="title">注册</div>
+        <el-form ref="form" class="form" :model="signupform" label-width="80px">
             <el-form-item label="用户名">
                 <el-input v-model="signupform.username"></el-input>
             </el-form-item>
             <el-form-item label="密码">
-                <el-input v-model="signupform.password"></el-input>
+                <el-input v-model="signupform.password"  type="password"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSignupSubmit">注册</el-button>
@@ -246,11 +248,27 @@ export default {
            display: inline-block
            float: right 
     .loginform-wrapper,.signupform-wrapper
-        position: relative
-        top: 100px
+        padding-left: 40px
+        padding-right: 40px
+        height: 360px
+        background-color: #f3f3f3
+        position: absolute
+        top: 150px
+        left: 400px
         margin: auto auto
         width: 50%
         z-index: 2
+        .title
+            position: relative
+            // top: 60px
+            text-align: left
+            line-height: 60px
+            height: 60px
+            font-size: 30px
+            background-color: #f3f3f3
+        .form
+            position: relative
+            top: 100px
     .message-wrapper
         display: none
 
