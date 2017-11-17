@@ -3,11 +3,11 @@
     <div class="header-wrapper">
         <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal"  background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
           <div class="title-wrapper">
-            <el-menu-item index="1" class="title">校园信息平台</el-menu-item>
+            <el-menu-item index="1" class="title" @click="goHomePage">校园信息平台</el-menu-item>
           </div>
           <!-- <el-menu-item index="2"></el-menu-item> -->
           <div class="menu-wrapper">
-            <el-menu-item index="2">活动</el-menu-item>
+            <el-menu-item index="2" @click="goHomePage">活动</el-menu-item>
           </div>
           <div class="search-wrapper">
               <el-input v-model="input" placeholder="请输入内容"></el-input>
@@ -196,6 +196,9 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    goHomePage() {
+      this.$router.push({path:'/'});
     },
     success(action) {
         if(action == 1){
