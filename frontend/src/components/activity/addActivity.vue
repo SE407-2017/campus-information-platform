@@ -86,7 +86,9 @@ export default {
           .then(function (response) {
               console.log(response.data)
               if(response.data.status){
-                  that.success()
+                  that.success();
+                  // 前端路由跳转
+                  that.$router.push({path:'/'})
               } else{
                   that.error(response.data.msg)
               }
