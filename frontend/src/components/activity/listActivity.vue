@@ -10,7 +10,9 @@
             </div>   
         </div>
      </div>
-     <el-button size="small" round class="submitActivity">提交活动</el-button>
+     <div class="addActivity">
+        <router-link to="/add/activity">提交活动</router-link>
+     </div>
   </div>
 </template>
 
@@ -55,6 +57,7 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
 .activity
     margin: 80px 60px 0px 60px
+    position: relative
     .activity-wrapper
         display: flex
         flex-wrap: wrap
@@ -80,6 +83,22 @@ export default {
                     margin-bottom: 15px
                 .time
                     margin-bottom: 5px
-
+    .addActivity
+        position: absolute
+        top: -60px
+        right: 10px
+        a
+            height: 30px
+            line-height: 30px
+            padding: 0 10px
+            background: #fff
+            border: 1px #ccc solid
+            border-radius: 6px
+            color: #333
+            /*color: #fff;*/
+            display: inline-block
+            text-decoration: none
+            font-size: 12px
+            outline: none
         
 </style>
