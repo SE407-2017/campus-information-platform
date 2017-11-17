@@ -52,8 +52,8 @@
     </div>
 
     <div class="message-wrapper">
-        <el-button :plain="true" @click="success(index)"></el-button>
-        <el-button :plain="true" @click="error(index)"></el-button>
+        <el-button :plain="true" @click="success(action)"></el-button>
+        <el-button :plain="true" @click="error(action)"></el-button>
         <!-- <el-button :plain="true" @click="open3"></el-button> -->
         <!-- <el-button :plain="true" @click="open4"></el-button> -->
     </div>
@@ -62,6 +62,9 @@
 </template>
 
 <script>
+const LOGIN = 1;
+const SIGNUP = 2;
+const LOGOUT = 3;
 export default {
   name: 'HelloWorld',
   data () {
@@ -113,6 +116,7 @@ export default {
            if(response.data.status == 1){
                 that.userState = "登录";
                 that.isLogin = false;
+                that.success(LOGOUT);
            }
         })
         .catch(function (error) {
@@ -137,7 +141,7 @@ export default {
            if(response.data.status == 1){
                 that.userState = response.data.msg;
                 that.isLogin = true;
-                that.success(1);
+                that.success(LOGIN);
            } else{
                 that.error(response.data.msg);
            }
@@ -159,7 +163,7 @@ export default {
         })
         .then(function (response) {
            if(response.data.status == 1){
-                that.success(2);
+                that.success(SIGNUP);
                 // 注册成功后自动登录
                 that.$axios.get('/api/user/login',{
                     params: {
@@ -169,7 +173,7 @@ export default {
                 })
                 .then(function (response) {
                    if(response.data.status == 1){
-                        that.userState = response.data.msg;
+                        that.userState = form_username;
                         that.isLogin = true;
                    }
                 })
@@ -193,15 +197,20 @@ export default {
           console.log(error);
         });
     },
-    success(index) {
-        if(index == 1){
+    success(action) {
+        if(action == 1){
             this.$message({
               message: '登陆成功',
               type: 'success'
             });
-        } else if (index == 2) {
+        } else if (action == 2) {
             this.$message({
               message: '注册成功',
+              type: 'success'
+            });
+        } else if (action == 3) {
+            this.$message({
+              message: '注销成功',
               type: 'success'
             });
         }
