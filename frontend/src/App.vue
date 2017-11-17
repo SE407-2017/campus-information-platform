@@ -15,9 +15,8 @@ export default {
 }
 </script>
 
-<style>
-#app {
-  text-align: center;
-  margin-top: 60px;
-}
+<style lang="stylus" rel="stylesheet/stylus">
+#app 
+  text-align: center
+  margin-top: 60px
 </style>

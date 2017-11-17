@@ -54,8 +54,6 @@
     <div class="message-wrapper">
         <el-button :plain="true" @click="success(action)"></el-button>
         <el-button :plain="true" @click="error(action)"></el-button>
-        <!-- <el-button :plain="true" @click="open3"></el-button> -->
-        <!-- <el-button :plain="true" @click="open4"></el-button> -->
     </div>
 
 </div>
