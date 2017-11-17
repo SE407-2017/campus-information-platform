@@ -35,6 +35,15 @@
             </div>   
         </div>
 
+        <div class="activity-item">
+            <div class="avatar"></div>
+            <div class="content">
+                <div class="title">运营修炼之道</div>
+                <div class="time">时间：2017-11-22 周三</div>
+                <div class="place">城市：上海</div>
+            </div>   
+        </div>
+
      </div>
   </div>
 </template>
@@ -61,8 +70,10 @@ export default {
     margin: 80px 60px 0px 60px
     .activity-wrapper
         display: flex
+        flex-wrap: wrap
         .activity-item
-            flex: 1
+            flex: 0 0 25%
+            margin-bottom: 30px
             .avatar
                 background-image: url("avatar.jpg")
                 background-size: 150px 150px
