@@ -1,4 +1,5 @@
 <template>
+<div class="addActivity">
     <div class="addActivity-wrapper" v-show="addActivity">
         <el-form :model="activityForm" :rules="rules" ref="activityForm" label-width="100px" class="demo-activityForm">
              <el-form-item label="活动名称" prop="name">
@@ -28,6 +29,11 @@
              </el-form-item>
         </el-form>
      </div>
+    <div class="message-wrapper">
+        <el-button :plain="true" @click="success()"></el-button>
+        <el-button :plain="true" @click="error(msg)"></el-button>
+    </div>
+</div>
 </template>
 
 <script>
@@ -77,22 +83,36 @@ export default {
               place: activityForm.region
             }
           })
-            .then(function (response) {
-                if(response.data.status){
-                    that.activityArr = response.data.data
-                    console.log(that.activityArr)
-                }
-            })
-            .catch(function (error) {
-              console.log(error);
+          .then(function (response) {
+              console.log(response.data)
+              if(response.data.status){
+                  that.success()
+              } else{
+                  that.error(response.data.msg)
+              }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      success() {
+            this.$message({
+              message: '添加活功',
+              type: 'success'
             });
+      },
+      error(msg) {
+          this.$message.error(msg)
       }
   }
 }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-.addActivity-wrapper
-    width: 600px
-    margin: 80px auto 0 auto
+.addActivity
+  .addActivity-wrapper
+      width: 600px
+      margin: 80px auto 0 auto
+  .message-wrapper
+      display: none
 </style>
