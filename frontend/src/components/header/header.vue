@@ -226,9 +226,10 @@ export default {
 <style lang="stylus" rel="stylesheet/stylus">
 @import url("//unpkg.com/element-ui@2.0.4/lib/theme-chalk/index.css");
 .header
+    text-align: center
     position: relative
     .header-wrapper
-        margin-top: -60px
+        margin-top: -10px
         .title-wrapper
             display: inline-block
             float: left
