@@ -1,12 +1,12 @@
 <template>
   <div class="activity">
      <div class="activity-wrapper">
-        <div class="activity-item">
+        <div class="activity-item" v-for="activity in activityArr">
             <div class="avatar"></div>
             <div class="content">
-                <div class="title">运营修炼之道</div>
-                <div class="time">时间：2017-11-22 周三</div>
-                <div class="place">城市：上海</div>
+                <div class="title">{{activity.title}}</div>
+                <div class="time">时间：{{activity.time}}</div>
+                <div class="place">城市：{{activity.place}}</div>
             </div>   
         </div>
      </div>
@@ -54,10 +54,12 @@ export default {
             .content
                 display: inline-block
                 vertical-align: top
+                margin-left: 10px
                 font-size: 14px
                 color: #999
                 .title
                     font-size: 20px
+                    width: 200px
                     color: #333
                     margin-bottom: 15px
                 .time
