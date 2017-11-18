@@ -4,7 +4,7 @@
         <div class="activity-item" v-for="activity in activityArr">
             <div class="avatar" @click="showDetail(activity.id)"></div>
             <div class="content">
-                <div class="title" @click="showDetail(activity.id)">{{activity.title}}</div>
+                <div class="title" @click="showDetail(activity.id)" target="_blank">{{activity.title}}</div>
                 <div class="time">时间：{{activity.time}}</div>
                 <div class="place">城市：{{activity.place}}</div>
             </div>   
@@ -66,6 +66,7 @@ export default {
                 width: 150px
                 height: 150px
                 display: inline-block
+                cursor: pointer
             .content
                 display: inline-block
                 // position: relative
@@ -78,6 +79,7 @@ export default {
                     width: 200px
                     color: #333
                     margin-bottom: 15px
+                    cursor: pointer
                 .time
                     margin-bottom: 5px
           
