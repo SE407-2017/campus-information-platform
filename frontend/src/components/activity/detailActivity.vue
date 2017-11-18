@@ -30,20 +30,12 @@ export default {
     }
   },
   mounted: function() {
-    var that = this
-    this.$axios.get('/api/activity/read?id='+this.$route.params.id)
-        .then(function (response) {
-            if(response.data.status){
-                that.detail.title = response.data.data.title;
-                that.detail.description = response.data.data.desc;
-                that.detail.place = response.data.data.place;
-                that.detail.time = response.data.data.time;
-            }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-  }
+    var data = this.$route.params.data
+    this.detail.title = data.title;
+    this.detail.description = data.desc;
+    this.detail.place = data.place;
+    this.detail.time = data.time;
+    }
 }
 </script>
 

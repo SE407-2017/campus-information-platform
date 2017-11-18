@@ -21,7 +21,7 @@ export default {
   name: 'activity',
   data(){
     return {
-        activityArr: []
+        activityArr: [],
     }
   },
   mounted: function(){
@@ -38,11 +38,27 @@ export default {
   },
   methods: {
     showDetail: function(activity_id){
+        var that =this
+        this.$axios.get('/api/activity/read?id='+activity_id)
+        .then(function (response) {
+            if(response.data.status){
+                that.$router.push({
+                    name: "DetailActivity",
+                    params: {
+                      id: activity_id,
+                      data: response.data.data                    
+                  }
+             });
+            }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
         // this.$route.push({
         //     name: "DetailActivity",
         //     params:{id: activity_id}
         // });
-        this.$router.push({path:'/activity/'+activity_id});
+        // this.$router.push({path:'/activity/'+activity_id});
     }
   }
  
