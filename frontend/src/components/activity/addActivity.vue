@@ -25,7 +25,7 @@
              </el-form-item>
              <el-form-item>
                 <el-button type="primary" @click="submitForm(activityForm)">添加活动</el-button>
-                <el-button @click="resetForm(activityForm)">取消</el-button>
+                <el-button @click="resetForm()">取消</el-button>
              </el-form-item>
         </el-form>
      </div>
@@ -91,11 +91,15 @@ export default {
                   that.$router.push({path:'/'})
               } else{
                   that.error(response.data.msg)
+                  that.$router.push({path:'/'});
               }
           })
           .catch(function (error) {
             console.log(error);
           });
+      },
+      resetForm: function(){
+          this.$router.push({path:'/'})
       },
       success() {
             this.$message({
