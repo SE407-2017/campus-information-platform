@@ -31,8 +31,7 @@
 	
 ## Custom
 
-#### Configure database
-
+	# Configure database
 	vim backend/config/database.php
 
 	DB_CONNECTION=mysql
