@@ -16,5 +16,6 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-
+#app
+    background-color: rgb(243,243,243)
 </style>
