@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <vHeader></vHeader>
-    <router-view/>
+    <router-view class="test"/>
   </div>
 </template>
 
@@ -16,6 +16,6 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
-#app
+body
     background-color: rgb(243,243,243)
 </style>

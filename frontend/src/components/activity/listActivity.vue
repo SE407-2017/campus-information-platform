@@ -30,7 +30,6 @@ export default {
         .then(function (response) {
             if(response.data.status){
                 that.activityArr = response.data.data
-                console.log(that.activityArr)
             }
         })
         .catch(function (error) {
