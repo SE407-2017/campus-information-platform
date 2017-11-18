@@ -2,9 +2,9 @@
   <div class="activity">
      <div class="activity-wrapper">
         <div class="activity-item" v-for="activity in activityArr">
-            <div class="avatar"></div>
+            <div class="avatar" @click="showDetail(activity.id)"></div>
             <div class="content">
-                <div class="title">{{activity.title}}</div>
+                <div class="title" @click="showDetail(activity.id)">{{activity.title}}</div>
                 <div class="time">时间：{{activity.time}}</div>
                 <div class="place">城市：{{activity.place}}</div>
             </div>   
@@ -38,16 +38,12 @@ export default {
         });
   },
   methods: {
-    submitActivity: function(){
-        this.$axios.get('/api/activity/add')
-            .then(function (response) {
-                if(response.data.status){
-
-                }
-            })
-            .catch(function (error) {
-              console.log(error);
-            });
+    showDetail: function(activity_id){
+        // this.$route.push({
+        //     name: "DetailActivity",
+        //     params:{id: activity_id}
+        // });
+        this.$router.push({path:'/activity/'+activity_id});
     }
   }
  
@@ -72,6 +68,7 @@ export default {
                 display: inline-block
             .content
                 display: inline-block
+                // position: relative
                 vertical-align: top
                 margin-left: 10px
                 font-size: 14px
@@ -83,6 +80,7 @@ export default {
                     margin-bottom: 15px
                 .time
                     margin-bottom: 5px
+          
     .addActivity
         position: absolute
         top: -60px
