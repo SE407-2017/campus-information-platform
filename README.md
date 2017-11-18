@@ -1,5 +1,5 @@
 # Campus-Information-Platform
-##
+
 ![](https://img.shields.io/badge/build-passing-brightgreen.svg)
 ![](https://img.shields.io/badge/licence-Apache%202-blue.svg)
 ![](https://img.shields.io/badge/Powered%20by-Laravel-green.svg)
