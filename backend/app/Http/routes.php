@@ -48,3 +48,8 @@ Route::group(['prefix' => 'api/activity'], function () {
     Route::get('read',"ActivityController@read");
     Route::get('remove',"ActivityController@remove");
 });
+
+// 评论路由
+Route::group(['prefix' => 'api/comment'], function () {
+    Route::get('add',"CommentController@add");
+});

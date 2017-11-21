@@ -14,7 +14,7 @@
               placeholder="请输入内容"
               v-model="textarea">
             </el-input>
-            <el-button type="primary" round class="btn">发布评论</el-button>
+            <el-button type="primary" round class="btn" @click="addComment">发布评论</el-button>
         </div>
     </div>
     <div class="intro-wrapper">
@@ -36,7 +36,8 @@ export default {
             description:"",
             time: "",
             place: ""
-        }
+        },
+        textarea: ''
     }
   },
   mounted: function() {
@@ -45,7 +46,21 @@ export default {
     this.detail.description = data.desc;
     this.detail.place = data.place;
     this.detail.time = data.time;
+  },
+  method: {
+    addComment: function(){
+        var that = this;
+        this.$axios.get('/api/comment/add?id='+this.$route.params.id + "&comment="+this.textarea)
+        .then(function (response) {
+            if(response.data.status){
+                console.log(that.data.data)
+            }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
+  }
 }
 </script>
 
