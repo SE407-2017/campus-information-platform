@@ -21,6 +21,7 @@
 
 <script>
 import Pagination from "../pagination/pagination";
+import bus from '../../common/bus.js'
 export default {
   name: 'activity',
   data(){
@@ -44,6 +45,13 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+  },
+  created: function(){ 
+        var that = this
+        bus.$on('turnPage', function (msg) {
+          that.activityArr = msg
+          console.log(msg)
+        })
   },
   methods: {
     showDetail: function(activity_id){

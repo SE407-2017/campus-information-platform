@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import bus from '../../common/bus.js'
 export default {
   name: 'pagination',
   props: {
@@ -17,7 +18,16 @@ export default {
   },
   methods: {
     handleCurrentChange: function(currentPage){
-        console.log(currentPage)
+        var that = this;
+        this.$axios.get('/api/activity/read?page='+currentPage)
+        .then(function (response) {
+            if(response.data.status){
+                bus.$emit('turnPage', response.data.data)
+            }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
     }
   }
 }
