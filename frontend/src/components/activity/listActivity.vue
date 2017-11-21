@@ -13,22 +13,31 @@
      <div class="addActivity">
         <router-link to="/add/activity">提交活动</router-link>
      </div>
+     <div class="pagination-wrapper">
+        <Pagination :totalPage="totalPage"></Pagination>
+     </div>
   </div>
 </template>
 
 <script>
+import Pagination from "../pagination/pagination";
 export default {
   name: 'activity',
   data(){
     return {
         activityArr: [],
+        totalPage: 0
     }
+  },
+  components: {
+    Pagination
   },
   mounted: function(){
     var that = this
     this.$axios.get('/api/activity/read')
         .then(function (response) {
             if(response.data.status){
+                that.totalPage = response.data.page
                 that.activityArr = response.data.data
             }
         })
@@ -115,5 +124,8 @@ export default {
             text-decoration: none
             font-size: 12px
             outline: none
+    .pagination-wrapper
+        text-align: center
+        margin-top: 50px
         
 </style>
