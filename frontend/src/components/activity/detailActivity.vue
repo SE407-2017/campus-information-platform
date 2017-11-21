@@ -5,6 +5,17 @@
         <div class="avatar"></div>
         <div class="division"></div>
         <div class="description">{{detail.description}}</div>
+        <div class="division"></div>
+        <div class="comment-wrapper">
+            <p class="title">评论</p>
+            <el-input
+              type="textarea"
+              :rows="2"
+              placeholder="请输入内容"
+              v-model="textarea">
+            </el-input>
+            <el-button type="primary" round class="btn">发布评论</el-button>
+        </div>
     </div>
     <div class="intro-wrapper">
         <div class="abstract">
@@ -12,7 +23,6 @@
             <div class="place">地点：{{detail.place}}</div>
         </div>
     </div>
-
   </div>
 </template>
 
@@ -43,6 +53,7 @@ export default {
 .detailActivity
     display: flex
     margin: 80px 200px 0 300px
+    position: relative
     font-family: lato-regular, 'Helvetica Neue', Helvetica, Arial, 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif
     .main-wrapper
         background-color: white
@@ -66,12 +77,24 @@ export default {
             font-size: 14px
             color: #333
             padding: 0 80px 0 80px
+        .comment-wrapper
+            margin: 50px 10px
+            .title
+                font-size: 16px
+                text-align: left
+                margin-left: 5px
+            .btn
+                border-radius: 20px
+                padding: 10px 16px
+                margin-top: 10px
+                margin-left: 480px
             
     .intro-wrapper
         background-color: white
         flex: 0 0 20%
         font-size: 14px
         color: #333
+            
         
         
 </style>
