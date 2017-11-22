@@ -52,6 +52,12 @@ Laravel我觉得看官方教程就行了 [http://laravelacademy.org/laravel-docs
 
 	php artisan migrate：rollback
 
+##### 迁移相关
+
+	http://blog.csdn.net/chajinglong/article/details/71192066
+
+	https://segmentfault.com/q/1010000004486085
+	http://blog.csdn.net/u011020900/article/details/52117188
 ### 代码管理
 
 使用老师推荐的Git
