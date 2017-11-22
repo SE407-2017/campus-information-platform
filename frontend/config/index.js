@@ -27,11 +27,22 @@ module.exports = {
   },
   dev: {
     env: require('./dev.env'),
-    port: process.env.PORT || 8080,
+    port: process.env.PORT || 8085,
     autoOpenBrowser: true,
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+        // 配置代理服务器
+        // 启动后端时一定要php -S 127.0.0.1:端口（不能用localhost），否则代理竟然出错，好坑！！！
+        "/api":{
+            target: "http://localhost:8086",
+            changeOrigin: true,
+            secure: false,
+            pathRewrite:{
+                "^/api":"/api"
+            }
+        }
+    },
     // CSS Sourcemaps off by default because relative paths are "buggy"
     // with this option, according to the CSS-Loader README
     // (https://github.com/webpack/css-loader#sourcemaps)

@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('test',"BaseController@isLogin");
+Route::get('api/isLogin',"BaseController@isLogin");
 
 // 用户路由
 Route::group(['prefix' => 'api/user'], function () {
@@ -47,4 +47,10 @@ Route::group(['prefix' => 'api/activity'], function () {
     Route::get('update',"ActivityController@update");
     Route::get('read',"ActivityController@read");
     Route::get('remove',"ActivityController@remove");
+});
+
+// 评论路由
+Route::group(['prefix' => 'api/comment'], function () {
+    Route::get('add',"CommentController@add");
+    Route::get('read',"CommentController@read");
 });

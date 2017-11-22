@@ -13,10 +13,13 @@ class ActivityController extends BaseController
     public function add(Request $request){
         // $this->isLogin()调用父控制器的方法
         // 检查用户是否登录
+        // dd($this->isLogin()["user_id"]);
         if($this->isLogin()) {
              $new_activity = new Activity;
              $new_activity->title = $request->title;
              $new_activity->desc = $request->desc;
+             $new_activity->time = $request->time;
+             $new_activity->place = $request->place;
              $new_activity->user_id = session("user_id");
              return $new_activity->save()?
                  ["status" => 1,"msg" => "create activities succeed"]:
@@ -72,8 +75,11 @@ class ActivityController extends BaseController
             // 根据参数page显示页面
             if( $page = $request->page)
                 return ["status" => 1,"data" => Activity::take(10)->skip(($page-1)*10)->get()];
-            else
-                return ["status" => 1,"data" => Activity::take(10)->get()];
+            else{
+                // 计算总页数
+                $totalPage = ceil(Activity::all()->count() / 10);
+                return ["status" => 1,"page" => $totalPage,"data" => Activity::take(10)->get()];
+            }
         }
 
     }

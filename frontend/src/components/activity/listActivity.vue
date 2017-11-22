@@ -1,0 +1,138 @@
+<template>
+  <div class="activity">
+     <div class="activity-wrapper">
+        <div class="activity-item" v-for="activity in activityArr">
+            <div class="avatar" @click="showDetail(activity.id)"></div>
+            <div class="content">
+                <div class="title" @click="showDetail(activity.id)" target="_blank">{{activity.title}}</div>
+                <div class="time">时间：{{activity.time}}</div>
+                <div class="place">城市：{{activity.place}}</div>
+            </div>   
+        </div>
+     </div>
+     <div class="addActivity">
+        <router-link to="/add/activity">提交活动</router-link>
+     </div>
+     <div class="pagination-wrapper">
+        <Pagination :totalPage="totalPage"></Pagination>
+     </div>
+  </div>
+</template>
+
+<script>
+import Pagination from "../pagination/pagination";
+import bus from '../../common/bus.js'
+export default {
+  name: 'activity',
+  data(){
+    return {
+        activityArr: [],
+        totalPage: 0
+    }
+  },
+  components: {
+    Pagination
+  },
+  mounted: function(){
+    var that = this
+    this.$axios.get('/api/activity/read')
+        .then(function (response) {
+            if(response.data.status){
+                that.totalPage = response.data.page
+                that.activityArr = response.data.data
+            }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+  },
+  created: function(){ 
+        var that = this
+        bus.$on('turnPage', function (msg) {
+          that.activityArr = msg
+        })
+  },
+  methods: {
+    showDetail: function(activity_id){
+        var that =this
+        this.$axios.get('/api/activity/read?id='+activity_id)
+        .then(function (response) {
+            if(response.data.status){
+                that.$router.push({
+                    name: "DetailActivity",
+                    params: {
+                      id: activity_id,
+                      data: response.data.data                    
+                  }
+             });
+            }
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+        // this.$route.push({
+        //     name: "DetailActivity",
+        //     params:{id: activity_id}
+        // });
+        // this.$router.push({path:'/activity/'+activity_id});
+    }
+  }
+ 
+}
+</script>
+
+<style lang="stylus" rel="stylesheet/stylus">
+.activity
+    margin: 80px 60px 0px 60px
+    position: relative
+    .activity-wrapper
+        display: flex
+        flex-wrap: wrap
+        .activity-item
+            flex: 0 0 25%
+            margin-bottom: 30px
+            .avatar
+                background-image: url("avatar.jpg")
+                background-size: 150px 150px
+                width: 150px
+                height: 150px
+                display: inline-block
+                cursor: pointer
+            .content
+                display: inline-block
+                // position: relative
+                vertical-align: top
+                margin-left: 10px
+                font-size: 14px
+                color: #999
+                .title
+                    font-size: 20px
+                    width: 200px
+                    color: #333
+                    margin-bottom: 15px
+                    cursor: pointer
+                .time
+                    margin-bottom: 5px
+          
+    .addActivity
+        position: absolute
+        top: -60px
+        right: 10px
+        a
+            height: 30px
+            line-height: 30px
+            padding: 0 10px
+            background: #fff
+            border: 1px #ccc solid
+            border-radius: 6px
+            color: #333
+            /*color: #fff;*/
+            display: inline-block
+            text-decoration: none
+            font-size: 12px
+            outline: none
+    .pagination-wrapper
+        text-align: center
+        margin-top: 50px
+        
+</style>
