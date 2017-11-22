@@ -8,19 +8,23 @@
         <div class="division"></div>
         <div class="comment-wrapper">
             <p class="title">评论</p>
-            <div class="comments" v-for="comment in commentArr">
-                <div class="avatar"></div>
-                <div class="username"></div>
-                <div class="content">{{comment.comment}}</div>
-                <div class="time"></div>
+            <div class="comment" v-for="comment in commentArr">
+                <div class="poster"></div>
+                <div class="content">
+                    <div class="username">美玉</div>
+                    <div class="text">{{comment.comment}}</div>
+                </div>
+                <div class="time">5天前</div>
             </div>
-            <el-input
-              type="textarea"
-              :rows="2"
-              placeholder="请输入评论"
-              v-model="comment">
-            </el-input>
-            <el-button type="primary" round class="btn" @click="addComment">发布评论</el-button>
+            <div class="commentBox">
+                <el-input
+                  type="textarea"
+                  :rows="2"
+                  placeholder="请输入评论"
+                  v-model="comment">
+                </el-input>
+                <el-button type="primary" round class="btn" @click="addComment">发布评论</el-button>
+            </div>
         </div>
     </div>
     <div class="intro-wrapper">
@@ -120,11 +124,32 @@ export default {
                 font-size: 16px
                 text-align: left
                 margin-left: 5px
-            .btn
-                border-radius: 20px
-                padding: 10px 16px
-                margin-top: 10px
-                margin-left: 480px
+            .comment
+                margin-top: 20px
+                .poster
+                    display: inline-block
+                    background-image: url("avatar.jpg")
+                    background-size: 50px 50px
+                    width: 50px
+                    height: 50px
+                .content
+                    display: inline-block
+                    vertical-align: top
+                    margin-left: 10px
+                    color: #7d7d7d
+                    .text
+                        margin-top: 5px
+                .time
+                    display: inline-block
+                    color: #7d7d7d
+                    float: right
+            .commentBox  
+                margin-top: 50px 
+                .btn
+                    border-radius: 20px
+                    padding: 10px 16px
+                    margin-top: 10px
+                    margin-left: 480px
             
     .intro-wrapper
         background-color: white
