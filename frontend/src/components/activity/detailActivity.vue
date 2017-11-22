@@ -8,10 +8,16 @@
         <div class="division"></div>
         <div class="comment-wrapper">
             <p class="title">评论</p>
+            <div class="comments" v-for="comment in commentArr">
+                <div class="avatar"></div>
+                <div class="username"></div>
+                <div class="content">{{comment.comment}}</div>
+                <div class="time"></div>
+            </div>
             <el-input
               type="textarea"
               :rows="2"
-              placeholder="请输入内容"
+              placeholder="请输入评论"
               v-model="comment">
             </el-input>
             <el-button type="primary" round class="btn" @click="addComment">发布评论</el-button>
@@ -37,15 +43,29 @@ export default {
             time: "",
             place: ""
         },
-        comment: ''
+        comment: '',
+        commentArr: []
     }
   },
   mounted: function() {
-    var data = this.$route.params.data
+    var data = this.$route.params.data;
     this.detail.title = data.title;
     this.detail.description = data.desc;
     this.detail.place = data.place;
     this.detail.time = data.time;
+  },
+  created: function(){
+    var that = this;
+    var actid = this.$route.params.id;
+    this.$axios.get('/api/comment/read?actid=' + actid)
+    .then(function (response) {
+        if(response.data.status){
+            that.commentArr = response.data.data;
+        }
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   },
   methods: {
     addComment: function(){
@@ -53,7 +73,9 @@ export default {
         this.$axios.get('/api/comment/add?actid='+this.$route.params.id + "&comment="+this.comment)
         .then(function (response) {
             if(response.data.status){
-                console.log(that.data)
+                // 将新增的评论暂时加入commentArr数组，没想到更好的方法- -
+                that.commentArr.push({comment:that.comment});
+                that.comment = "";
             }
         })
         .catch(function (error) {

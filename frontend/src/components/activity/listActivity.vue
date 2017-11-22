@@ -50,7 +50,6 @@ export default {
         var that = this
         bus.$on('turnPage', function (msg) {
           that.activityArr = msg
-          console.log(msg)
         })
   },
   methods: {

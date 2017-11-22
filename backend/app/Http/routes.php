@@ -52,4 +52,5 @@ Route::group(['prefix' => 'api/activity'], function () {
 // 评论路由
 Route::group(['prefix' => 'api/comment'], function () {
     Route::get('add',"CommentController@add");
+    Route::get('read',"CommentController@read");
 });
