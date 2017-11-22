@@ -20,7 +20,10 @@
           </div>
         </el-menu>
     </div>
-
+    
+   
+    
+    
     <div class="loginform-wrapper" v-show="login">
         <div class="title">登录</div>
         <el-form ref="form" class="form" :model="loginform" label-width="80px">
@@ -30,13 +33,13 @@
             <el-form-item label="密码">
                 <el-input v-model="loginform.password"  type="password"></el-input>
             </el-form-item>
-            <el-form-item>
+            <div class="newlogin">
                 <el-button type="primary" @click="onLoginSubmit">登录</el-button>
                 <el-button @click="cancelLogin">取消</el-button>
-            </el-form-item>
+            </div>
         </el-form>
     </div>
-
+    
     <div class="signupform-wrapper" v-show="signup">
         <div class="title">注册</div>
         <el-form ref="form" class="form" :model="signupform" label-width="80px">
@@ -253,27 +256,30 @@ export default {
     .loginform-wrapper,.signupform-wrapper
         padding-left: 40px
         padding-right: 40px
-        height: 360px
-        background-color: #f3f3f3
+        height: 285px
+        background-color: #e6fdff
         position: absolute
-        top: 150px
-        left: 400px
+        top: 190px
+        left: 500px
         margin: auto auto
-        width: 50%
+        width: 30%
         z-index: 2
         .title
             position: relative
             // top: 60px
             text-align: left
-            line-height: 60px
-            height: 60px
+            line-height: 100px
+            height: 50px
             font-size: 30px
-            background-color: #f3f3f3
+            background-color: #e6fdff
+            .newlogin
+                margin-left: 15px
         .form
             position: relative
-            top: 100px
+            top: 50px
     .message-wrapper
         display: none
-
+    
+    
         
 </style>
