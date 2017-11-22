@@ -10,29 +10,66 @@ use App\Activity;
 
 class AdminController extends BaseController
 {
-  public function login(Request $request){
-      $username = $request->username;
+  /**
+      注册api
+   */
+  public function signup(Request $request)
+  {
+      $adminname = $request->adminname;
       $password = $request->password;
 
       // 检测用户名和密码是否为空
-      if(!$username || !$password){
-          return ["status" => 0,"msg" => "username and password can't be empty"];
+      if(!$adminname || !$password){
+          return ["status" => 0,"msg" => "adminname and password can't be empty"];
       }
 
       // 检测用户是否存在
-      $user = User::where('username', $username)->first();
-      if(!$user)
-          return ["status" => 0,"msg" => "user doesn't exist"];
+      $admin_exist = Admin::where('adminname', $adminname)->first();
+      if($admin_exist){
+          return ["status" => 0,"msg" => "admin exists"];
+      }
+
+      // 加密密码
+      $hashed_password = Hash::make($password);
+
+      // dd 函数为 Laravel 内置的打印输出函数
+      // dd($hashed_password);
+
+      // 存储用户进数据库
+      $new_admin = new Admin;
+      $new_admin->adminname = $adminname;
+      $new_admin->password = $hashed_password;
+      if($new_user->save())
+          return ["status" => 1,"msg" => "admin " . $new_admin->id . " save succeed"];
+      else
+          return ["status" => 0,"msg" => "db insert failed"];
+
+      return 1;
+  }
+
+  public function login(Request $request){
+      $adminname = $request->adminname;
+      $password = $request->password;
+
+      // 检测用户名和密码是否为空
+      if(!$adminname || !$password){
+          return ["status" => 0,"msg" => "adminname and password can't be empty"];
+      }
+
+      // 检测用户是否存在
+      $admin = Admin::where('adminname', $adminname)->first();
+      if(!$admin)
+          return ["status" => 0,"msg" => "admin doesn't exist"];
       else{
-          $hashed_password = $user->password;
+          $hashed_password = $admin->password;
           // 检查明文密码是否与加密后的密码相符
           if (!Hash::check($password, $hashed_password))
               return ["status" => 0,"msg" => "password is wrong"];
           else {
               // 写入Session
-              $request->session()->put("username",$username);
-              $request->session()->put("user_id",$user->id);
-              return ["status" => 1,"msg" => "user " . $user->id . " login succeed","username" => $username];
+              $request->session()->put("adminname",$adminname);
+              $request->session()->put("admin_id",$admin->id);
+              return ["status" => 1,"msg" => "admin " . $admin->id . " login succeed","adminname" => $adminname];
 
               // dd(session()->all());
           }
@@ -48,11 +85,11 @@ class AdminController extends BaseController
       修改密码
    */
   public function modifyPassword(Request $request){
-    $user_id = session("user_id");
+    $admin_id = session("admin_id");
     $old_psw = $request->old_psw;
     $new_psw = $request->new_psw;
-    $user = User::where('id', $user_id)->first();
-    if (!Hash::check($old_psw, $user->password))
+    $admin = Admin::where('id', $admin_id)->first();
+    if (!Hash::check($old_psw, $admin->password))
       return ["status" => 0,"msg" => "old password is wrong"];
     else {
       $user->password = $old_psw;
