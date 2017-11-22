@@ -392,6 +392,7 @@ export default {
   methods: {
     clickToLogin: function() {
         this.login = true;
+        this.signup = false;
     },
     cancelLogin: function() {
         this.login = false;
@@ -412,6 +413,7 @@ export default {
     },
     clickToSignup: function(){
         this.signup = true;
+        this.login = false;
     },
     cancelSignup: function(){
         this.signup = false;
@@ -538,7 +540,7 @@ export default {
            display: inline-block
            float: right 
     .loginform-wrapper,.signupform-wrapper
-        padding-left: 40px
+        padding-left: 150px
         padding-right: 40px
         height: 360px
         background-color: #f3f3f3
@@ -546,19 +548,20 @@ export default {
         top: 150px
         left: 400px
         margin: auto auto
-        width: 50%
+        width: 25%
         z-index: 2
         .title
             position: relative
-            // top: 60px
-            text-align: left
+            top: 60px
+            left: 30px
+            text-align: center
             line-height: 60px
             height: 60px
             font-size: 30px
             background-color: #f3f3f3
         .form
             position: relative
-            top: 100px
+            top: 80px
     .message-wrapper
         display: none
 
