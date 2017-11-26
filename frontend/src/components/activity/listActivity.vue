@@ -54,10 +54,23 @@ export default {
   },
   methods: {
     showDetail: function(activity_id){
-        var that =this
+        var that = this
         this.$axios.get('/api/activity/read?id='+activity_id)
         .then(function (response) {
             if(response.data.status){
+                // 查询报名状态
+                that.$axios.get('/api/apply/inquire?actid=' + activity_id)
+                .then(function (res) {
+                    if(res.data.status)
+                        response.data.data.applyStatus = "取消报名";
+                    else
+                        response.data.data.applyStatus = "立即报名";
+                })
+                .catch(function (error) {
+                  console.log(error);
+                });
+
+                console.log(response.data.data)  
                 that.$router.push({
                     name: "DetailActivity",
                     params: {

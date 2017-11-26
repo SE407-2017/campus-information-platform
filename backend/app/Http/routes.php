@@ -59,4 +59,6 @@ Route::group(['prefix' => 'api/comment'], function () {
 Route::group(['prefix' => 'api/apply'], function () {
     Route::get('add',"ApplyController@add");
     Route::get('cancel',"ApplyController@cancel");
+    // 查询状态
+    Route::get('inquire',"ApplyController@inquire");
 });

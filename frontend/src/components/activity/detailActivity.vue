@@ -31,12 +31,21 @@
         <div class="abstract">
             <div class="time">时间：{{detail.time}}</div>
             <div class="place">地点：{{detail.place}}</div>
+            <el-button size="small" round class="applyActivty" @click="applyActivty" :class="{applied:isApplied}">{{applyStatus}}</el-button>
         </div>
+    </div>
+
+    <div class="message-wrapper">
+        <el-button :plain="true" @click="success(action)"></el-button>
+        <el-button :plain="true" @click="error(action)"></el-button>
     </div>
   </div>
 </template>
 
 <script>
+const COMMENT = 1;
+const APPLY = 2;
+const CANCELAPPLY = 3;
 export default {
   name: 'app',
   data() {
@@ -48,19 +57,31 @@ export default {
             place: ""
         },
         comment: '',
-        commentArr: []
+        commentArr: [],
+        applyStatus: "",
+        isApplied: false
     }
   },
-  mounted: function() {
+  beforeMount: function() {
     var data = this.$route.params.data;
     this.detail.title = data.title;
     this.detail.description = data.desc;
     this.detail.place = data.place;
     this.detail.time = data.time;
+    var that = this
+    // 不知道为什么直接取data.applyStatus取不到，暂时通过延时来解决
+    setTimeout(function() {
+        that.applyStatus = data.applyStatus;
+        console.log(data.applyStatus)
+        if(that.applyStatus == "取消报名")
+            that.isApplied = true;
+    }, 200)
+
   },
   created: function(){
     var that = this;
     var actid = this.$route.params.id;
+    // 显示评论
     this.$axios.get('/api/comment/read?actid=' + actid)
     .then(function (response) {
         if(response.data.status){
@@ -70,6 +91,7 @@ export default {
     .catch(function (error) {
       console.log(error);
     });
+
   },
   methods: {
     addComment: function(){
@@ -77,6 +99,7 @@ export default {
         this.$axios.get('/api/comment/add?actid='+this.$route.params.id + "&comment="+this.comment)
         .then(function (response) {
             if(response.data.status){
+                that.success(COMMENT);
                 // 将新增的评论暂时加入commentArr数组，没想到更好的方法- -
                 that.commentArr.push({comment:that.comment});
                 that.comment = "";
@@ -85,6 +108,58 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+    },
+    applyActivty: function(){
+        var that = this;
+        if(this.applyStatus == "立即报名"){
+            this.$axios.get('/api/apply/add?actid='+this.$route.params.id)
+            .then(function (response) {
+                if(response.data.status){
+                    that.success(APPLY);
+                    that.applyStatus = "取消报名";
+                    that.isApplied = true;
+
+                } else {
+                    console.log(response.data.msg)
+                }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        } else{
+            this.$axios.get('/api/apply/cancel?actid='+this.$route.params.id)
+            .then(function (response) {
+                if(response.data.status){
+                    that.success(CANCELAPPLY)
+                    that.applyStatus = "立即报名";
+                    that.isApplied = false;
+                }
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        }
+    },
+    success(action) {
+        if(action == 1){
+            this.$message({
+              message: '评论成功',
+              type: 'success'
+            });
+        } else if (action == 2) {
+            this.$message({
+              message: '报名成功',
+              type: 'success'
+            });
+        } else if (action == 3) {
+            this.$message({
+              message: '取消报名成功',
+              type: 'success'
+            });
+        }
+    },
+    error(msg) {
+        this.$message.error(msg)
     }
   }
 }
@@ -156,7 +231,17 @@ export default {
         flex: 0 0 20%
         font-size: 14px
         color: #333
-            
+        .abstract
+            text-align: center
+            margin-top: 30px
+            .applyActivty
+                background-color: #009a61
+                color: #fff
+                margin-top: 10px
+            .applied
+                background-color: red
+    .message-wrapper
+        display: none
         
         
 </style>
