@@ -103,7 +103,7 @@ class ActivityController extends BaseController
             if($activity->user_id == session("user_id")){
                 return $activity->delete()?
                     ["status" => 1,"msg" => "Remove succeed"]:
-                    ["status" => 0,"msg" => "db insert failed"];;
+                    ["status" => 0,"msg" => "db insert failed"];
             }
             else{
                 return ["status" => 0,"msg" => "You don't have the access to delete this question"];

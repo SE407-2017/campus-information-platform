@@ -57,6 +57,6 @@ Route::group(['prefix' => 'api/comment'], function () {
 
 // 报名路由
 Route::group(['prefix' => 'api/apply'], function () {
-    Route::get('add',"ApplyController@apply");
-    Route::get('read',"ApplyController@cancel");
+    Route::get('add',"ApplyController@add");
+    Route::get('cancel',"ApplyController@cancel");
 });
