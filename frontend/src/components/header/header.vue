@@ -27,10 +27,7 @@
     <div class="loginform-wrapper" v-show="login">
         <div class="title">登录</div>
         <el-form ref="form" class="form" :model="loginform" label-width="80px">
-            <div unselectable="on" class="shadow1"></div>
-            <div unselectable="on" class="shadow2"></div>
-            <div unselectable="on" class="shadow3"></div>
-            <div unselectable="on" class="shadow4"></div>
+            <div unselectable="on" style="z-index:-1;background:#000;filter:alpha(opacity=500);opacity:.2;left:0px;top:0px;position:fixed;height:100%;width:100%;overflow:hidden;"></div>
             <el-form-item label="用户名">
                 <el-input v-model="loginform.username"></el-input>
             </el-form-item>
@@ -47,10 +44,6 @@
     <div class="signupform-wrapper" v-show="signup">
         <div class="title">注册</div>
         <el-form ref="form" class="form" :model="signupform" label-width="80px">
-        	<div unselectable="on" class="shadow1"></div>
-            <div unselectable="on" class="shadow2"></div>
-            <div unselectable="on" class="shadow3"></div>
-            <div unselectable="on" class="shadow4"></div>
             <el-form-item label="用户名">
                 <el-input v-model="signupform.username"></el-input>
             </el-form-item>
@@ -156,7 +149,6 @@ export default {
            } else{
                 that.error(response.data.msg);
            }
-
         })
         .catch(function (error) {
           console.log(error);
@@ -228,12 +220,10 @@ export default {
               type: 'success'
             });
         }
-
     },
     error(msg) {
         this.$message.error(msg)
     }
-
   }
 }
 </script>
@@ -257,7 +247,6 @@ export default {
         .search-wrapper
             display: inline-block
             margin-top: 10px
-
         .state-wrapper
            display: inline-block
            float: right 
@@ -265,69 +254,28 @@ export default {
         padding-left: 40px
         padding-right: 40px
         height: 285px
-        background-color: white
+        background-color: #9bff71
         position: absolute
         top: 190px
-        left: 580px
+        left: 500px
         margin: auto auto
-        width: 20%
+        width: 30%
         z-index: 2
         .title
             z-index: 2
             position: relative
             // top: 60px
-            left: 20px
             text-align: left
             line-height: 100px
             height: 50px
             font-size: 30px
-            //background-color: #9bff71
+            background-color: #9bff71
             .newlogin
                 margin-left: 15px
         .form
             z-index: 2
             position: relative
             top: 50px
-            .shadow1
-            	z-index: -1
-            	background:#000
-            	opacity:.2
-            	left:0px
-            	top:0px
-            	position:fixed
-            	height:188px
-            	width:100%
-            	overflow:hidden
-         	.shadow2
-            	z-index: -1
-            	background:#000
-            	opacity:.2
-            	left:0px
-            	top:473px
-            	position:fixed
-            	height:100%
-            	width:100%
-            	overflow:hidden
-            .shadow3
-            	z-index: -1
-            	background:#000
-            	opacity:.2
-            	left:0px
-            	top:188px
-            	position:fixed
-            	height:285px
-            	width:588px
-            	overflow:hidden
-            .shadow4
-            	z-index: -1
-            	background:#000
-            	opacity:.2
-            	left:973px
-            	top:188px
-            	position:fixed
-            	height:285px
-            	width:580px
-            	overflow:hidden
     .message-wrapper
         display: none
     
