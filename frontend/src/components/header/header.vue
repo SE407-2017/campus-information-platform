@@ -13,10 +13,19 @@
               <el-input v-model="input" placeholder="请输入内容"></el-input>
           </div>
           <div class="state-wrapper">
-              <el-menu-item index="3" @click="clickToLogin">{{userState}}</el-menu-item>
-              <el-menu-item index="5" v-show="isLogin" @click="clickToLogout">注销</el-menu-item>
-              <el-menu-item index="4" @click="clickToSignup">注册</el-menu-item>
-              <el-menu-item index="4" @click="testapi">测试</el-menu-item>
+              <el-menu-item v-show="isLogin" index="3">
+                <el-dropdown @command="handleCommand">
+                  <el-menu-item index="4" >{{userState}}</el-menu-item>
+                  <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item :command="myInfo">个人中心</el-dropdown-item>
+                    <el-dropdown-item :command="myActivity" >我的活动</el-dropdown-item>
+                    <el-dropdown-item :command="clickToLogout" >注销</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </el-menu-item>
+              <el-menu-item index="4" @click="clickToLogin" v-show="!isLogin">登录</el-menu-item>
+              <el-menu-item index="6" @click="clickToSignup">注册</el-menu-item>
+              <el-menu-item index="7" @click="testapi">测试</el-menu-item>
           </div>
         </el-menu>
     </div>
@@ -27,7 +36,7 @@
     <div class="loginform-wrapper" v-show="login">
         <div class="title">登录</div>
         <el-form ref="form" class="form" :model="loginform" label-width="80px">
-            <div unselectable="on" style="z-index:-1;background:#000;filter:alpha(opacity=500);opacity:.2;left:0px;top:0px;position:fixed;height:100%;width:100%;overflow:hidden;"></div>
+            <div unselectable="on" style="z-index:-1;background:#000;filter:alpha(opacity=500);opacity:.4;left:0px;top:0px;position:fixed;height:100%;width:100%;overflow:hidden;"></div>
             <el-form-item label="用户名">
                 <el-input v-model="loginform.username"></el-input>
             </el-form-item>
@@ -145,6 +154,7 @@ export default {
            if(response.data.status == 1){
                 that.userState = response.data.username;
                 that.isLogin = true;
+                that.login = false;
                 that.success(LOGIN);
            } else{
                 that.error(response.data.msg);
@@ -203,6 +213,12 @@ export default {
     goHomePage() {
       this.$router.push({path:'/'});
     },
+    myInfo() {
+      this.$router.push({path:'/user/info'});
+    },
+    myActivity() {
+      this.$router.push({path:'/add/activity'});
+    },
     success(action) {
         if(action == 1){
             this.$message({
@@ -223,6 +239,9 @@ export default {
     },
     error(msg) {
         this.$message.error(msg)
+    },
+    handleCommand(command) {
+        this.$message(command);
     }
   }
 }
@@ -254,7 +273,7 @@ export default {
         padding-left: 40px
         padding-right: 40px
         height: 285px
-        background-color: #9bff71
+        background-color:#f3f3f3
         position: absolute
         top: 190px
         left: 500px
@@ -269,7 +288,7 @@ export default {
             line-height: 100px
             height: 50px
             font-size: 30px
-            background-color: #9bff71
+            background-color:#f3f3f3
             .newlogin
                 margin-left: 15px
         .form

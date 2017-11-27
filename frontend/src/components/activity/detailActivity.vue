@@ -45,7 +45,7 @@
 <script>
 const COMMENT = 1;
 const APPLY = 2;
-const CANCELAPPLY = 3;
+const CANCEL_APPLY = 3;
 export default {
   name: 'app',
   data() {
@@ -130,7 +130,7 @@ export default {
             this.$axios.get('/api/apply/cancel?actid='+this.$route.params.id)
             .then(function (response) {
                 if(response.data.status){
-                    that.success(CANCELAPPLY)
+                    that.success(CANCEL_APPLY)
                     that.applyStatus = "立即报名";
                     that.isApplied = false;
                 }
