@@ -12,8 +12,8 @@ class AlterActivityTable extends Migration
      */
     public function up()
     {
-        Schema::table('activities', function ($table) { 
-            $table->boolean('isShow'); 
+        Schema::table('activities', function ($table) {
+            $table->boolean('isShow')->default(true);
         });
     }
 

@@ -18,12 +18,12 @@ class AdminController extends BaseController
       $adminname = $request->adminname;
       $password = $request->password;
 
-      // 检测用户名和密码是否为空
+      // 检测管理员名和密码是否为空
       if(!$adminname || !$password){
           return ["status" => 0,"msg" => "adminname and password can't be empty"];
       }
 
-      // 检测用户是否存在
+      // 检测管理员是否存在
       $admin_exist = Admin::where('adminname', $adminname)->first();
       if($admin_exist){
           return ["status" => 0,"msg" => "admin exists"];
@@ -35,11 +35,11 @@ class AdminController extends BaseController
       // dd 函数为 Laravel 内置的打印输出函数
       // dd($hashed_password);
 
-      // 存储用户进数据库
+      // 存储管理员进数据库
       $new_admin = new Admin;
       $new_admin->adminname = $adminname;
       $new_admin->password = $hashed_password;
-      if($new_user->save())
+      if($new_admin->save())
           return ["status" => 1,"msg" => "admin " . $new_admin->id . " save succeed"];
       else
           return ["status" => 0,"msg" => "db insert failed"];
@@ -51,12 +51,12 @@ class AdminController extends BaseController
       $adminname = $request->adminname;
       $password = $request->password;
 
-      // 检测用户名和密码是否为空
+      // 检测管理员名和密码是否为空
       if(!$adminname || !$password){
           return ["status" => 0,"msg" => "adminname and password can't be empty"];
       }
 
-      // 检测用户是否存在
+      // 检测管理员是否存在
       $admin = Admin::where('adminname', $adminname)->first();
       if(!$admin)
           return ["status" => 0,"msg" => "admin doesn't exist"];
@@ -97,6 +97,24 @@ class AdminController extends BaseController
           ["status" => 1,"msg" => "Modify password succeed"]:
           ["status" => 0,"msg" => "db save failed"];
     }
+  }
+
+  public function hide(Request $request){
+      if($this->isLogin()){
+        $activity_id = $request->id;
+        $activity = Activity::find($activity_id);
+        //隐藏活动
+        if ($activity){
+          $activity->isShow = false;
+          return ["status" => 1,"msg" => "Activity ".$activity_id." is hidden"];
+        }
+        else{
+          return ["status" => 0,"msg"=>"No such activity"];
+        }
+      }
+      else{
+        return ["status"=>0, "msg"=>"you have to login first."];
+      }
   }
 
 }
