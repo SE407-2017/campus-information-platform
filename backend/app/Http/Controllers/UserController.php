@@ -7,6 +7,7 @@ use Illuminate\Routing\Controller;
 use App\User;
 use App\Activity;
 use Hash;
+use Mail;
 
 class UserController extends BaseController
 {
