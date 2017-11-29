@@ -8,6 +8,7 @@ use App\User;
 use App\Activity;
 use Hash;
 use Mail;
+use Auth;
 
 class UserController extends BaseController
 {
@@ -53,15 +54,16 @@ class UserController extends BaseController
         $new_user = new User;
         $new_user->username = $username;
         $new_user->password = $hashed_password;
-        if($new_user->save())
-            return ["status" => 1,"msg" => "user " . $new_user->id . " save succeed"];
+        if($new_user->save()){
+            return ["status" => 1,"msg" => "nuser " . $new_user->id . " save succeed"];
+        }
         else
             return ["status" => 0,"msg" => "db insert failed"];
-        
+
         return 1;
     }
 
-    /** 
+    /**
         登录api
      */
     public function login(Request $request){
@@ -77,10 +79,13 @@ class UserController extends BaseController
         $user = User::where('username', $username)->first();
         if(!$user)
             return ["status" => 0,"msg" => "user doesn't exist"];
+        else if (session("username")){
+            return ["status" => 0, "msg" => "you have already logged in !"];
+        }
         else{
             $hashed_password = $user->password;
             // 检查明文密码是否与加密后的密码相符
-            if (!Hash::check($password, $hashed_password)) 
+            if (!Hash::check($password, $hashed_password))
                 return ["status" => 0,"msg" => "password is wrong"];
             else {
 
@@ -91,11 +96,11 @@ class UserController extends BaseController
 
                 // dd(session()->all());
             }
-            
+
         }
     }
 
-    /** 
+    /**
         注销api
      */
     public function logout(Request $request){
@@ -104,7 +109,7 @@ class UserController extends BaseController
        return ["status" => 1,"msg" => "loginout succeed"];
     }
 
-    /** 
+    /**
         查看用户基本信息
      */
     public function detailHome(Request $request){
@@ -112,7 +117,7 @@ class UserController extends BaseController
       return User::where('id', $user_id)->get();
     }
 
-    /** 
+    /**
         查看用户参加的活动
      */
     public function detailActivity(Request $request){
@@ -120,7 +125,7 @@ class UserController extends BaseController
       return Activity::where('user_id', $user_id)->get();
     }
 
-    /** 
+    /**
         修改基本信息
      */
     public function modifyMessage(Request $request){
@@ -142,12 +147,12 @@ class UserController extends BaseController
          $user->intro = $intro;
       }
 
-      return $user->save()? 
+      return $user->save()?
             ["status" => 1,"msg" => "Modify user basic information succeed"]:
-            ["status" => 0,"msg" => "db save failed"]; 
+            ["status" => 0,"msg" => "db save failed"];
     }
 
-    /** 
+    /**
         修改密码
      */
     public function modifyPassword(Request $request){
@@ -156,16 +161,16 @@ class UserController extends BaseController
       $new_psw = $request->new_psw;
       $user = User::where('id', $user_id)->first();
       if (!Hash::check($old_psw, $user->password))
-        return ["status" => 0,"msg" => "old password is wrong"]; 
+        return ["status" => 0,"msg" => "old password is wrong"];
       else {
         $user->password = $old_psw;
-        return $user->save()? 
+        return $user->save()?
             ["status" => 1,"msg" => "Modify password succeed"]:
-            ["status" => 0,"msg" => "db save failed"]; 
+            ["status" => 0,"msg" => "db save failed"];
       }
     }
 
 
 
- 
+
 }

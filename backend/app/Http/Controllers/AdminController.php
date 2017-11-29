@@ -60,6 +60,9 @@ class AdminController extends BaseController
       $admin = Admin::where('adminname', $adminname)->first();
       if(!$admin)
           return ["status" => 0,"msg" => "admin doesn't exist"];
+      else if (session("adminname")){
+          return ["status" => 0, "msg" => "you have already logged in !"];
+      }
       else{
           $hashed_password = $admin->password;
           // 检查明文密码是否与加密后的密码相符
@@ -100,7 +103,7 @@ class AdminController extends BaseController
   }
 
   public function hide(Request $request){
-      if($this->isLogin()){
+      if($this->adminIsLogin()){
         $activity_id = $request->id;
         $activity = Activity::find($activity_id);
         //隐藏活动

@@ -40,6 +40,7 @@ Route::group(['prefix' => 'api/admin'], function () {
     Route::get('login',"AdminController@login");
     Route::get('logout',"AdminController@logout");
     Route::get('hide',"AdminController@hide");
+    Route::get('modifypassword',"AdminController@modifyPassword");
 });
 
 // 活动路由
