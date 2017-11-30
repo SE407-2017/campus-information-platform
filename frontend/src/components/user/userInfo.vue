@@ -84,9 +84,10 @@ export default {
         this.isMyInfo = false;
         this.isMyAct = true;
         var that = this;
-        this.$axios.get('/api/activity/read')
+        this.$axios.get('/api/user/detail/activity')
         .then(function (response) {
-            that.activityArr = response.data.data;
+            console.log(response.data)
+            that.activityArr = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -108,8 +109,6 @@ export default {
                 .catch(function (error) {
                   console.log(error);
                 });
-
-                console.log(response.data.data)  
                 that.$router.push({
                     name: "DetailActivity",
                     params: {

@@ -74,11 +74,11 @@ class ActivityController extends BaseController
         } else {
             // 根据参数page显示页面
             if( $page = $request->page)
-                return ["status" => 1,"data" => Activity::take(10)->skip(($page-1)*10)->get()];
+                return ["status" => 1,"data" => Activity::take(12)->skip(($page-1)*12)->get()];
             else{
                 // 计算总页数
-                $totalPage = ceil(Activity::all()->count() / 10);
-                return ["status" => 1,"page" => $totalPage,"data" => Activity::take(10)->get()];
+                $totalPage = ceil(Activity::all()->count() / 12);
+                return ["status" => 1,"page" => $totalPage,"data" => Activity::take(12)->get()];
             }
         }
 

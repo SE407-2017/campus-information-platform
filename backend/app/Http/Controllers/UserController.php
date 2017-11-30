@@ -6,10 +6,11 @@ use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\User;
 use App\Activity;
+use App\User_apply_activity;
 use Hash;
 use Mail;
 use Auth;
-
+use DB;
 class UserController extends BaseController
 {
     /**
@@ -122,7 +123,10 @@ class UserController extends BaseController
      */
     public function detailActivity(Request $request){
       $user_id = session("user_id");
-      return Activity::where('user_id', $user_id)->get();
+     
+      return  DB::table('user_apply_activities')
+            ->join('activities', 'activities.id', '=', 'user_apply_activities.activity_id')
+            ->get();
     }
 
     /**
