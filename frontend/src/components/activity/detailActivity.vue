@@ -122,6 +122,7 @@ export default {
                     that.isApplied = true;
 
                 } else {
+                    that.error(response.data.msg);
                     console.log(response.data.msg)
                 }
             })

@@ -65,16 +65,4 @@ Route::group(['prefix' => 'api/apply'], function () {
     Route::get('inquire',"ApplyController@inquire");
 });
 
-Route::get('send/email', function(){
-
-     $name = '学院君';
-     $flag = Mail::send('emails.reminder',['name'=>"tang"],function($message){
-            $to = '1074461480@qq.com';
-            $message ->to($to)->subject('测试邮件');
-        });
-        if($flag){
-            echo '发送邮件成功，请查收！';
-        }else{
-            echo '发送邮件失败，请重试！';
-        }
-});
+Route::get('send/email','MailController@send');

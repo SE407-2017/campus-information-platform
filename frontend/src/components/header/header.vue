@@ -108,7 +108,7 @@ export default {
        signupform: {
           username: "",
           password: "",
-          myCroppa: "",
+          myCroppa: {},
           intro: "",
           email: "",
           phone: ""
@@ -225,6 +225,8 @@ export default {
                       .catch(function (error) {
                         console.log(error);
                       });
+
+
                  } else {
                      that.error(response.data.msg)
                  }

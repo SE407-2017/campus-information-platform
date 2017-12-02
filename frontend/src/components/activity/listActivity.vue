@@ -3,7 +3,7 @@
       <div class="slider" v-show="activityArr!=[]">
             <h2 class="title">热门活动</h2>
             <el-carousel height="200px" type="card">
-              <el-carousel-item v-for="(activity,index) in activityArr" :key="item" v-if="index<4">
+              <el-carousel-item v-for="(activity,index) in activityArr"  v-if="index<4">
                 <div class="poster" @click="showDetail(activity.id)" :style="{ backgroundImage: 'url(' + activity.poster+ ')' }"></div>
               </el-carousel-item>
             </el-carousel>
@@ -116,17 +116,17 @@ export default {
           font-size: 24px
           font-weight: 500
       .el-carousel__item
-          z-index: -1
+          z-index: 0
           color: red
-          opacity: 0.75
+          opacity: 0.8
           line-height: 150px
           margin: 0
           .poster
-                background-size: 350px 200px
-                width: 350px
-                height: 200px
-                display: inline-block
-                cursor: pointer
+              background-size: 350px 200px
+              width: 350px
+              height: 200px
+              display: inline-block
+              cursor: pointer
         .el-carousel__item:nth-child(2n) 
            background-color: #99a9bf
         .el-carousel__item:nth-child(2n+1) 

@@ -104,7 +104,7 @@ class UserController extends BaseController
                 $request->session()->put("username",$username);
                 $request->session()->put("user_id",$user->id);
                 return ["status" => 1,"msg" => "user " . $user->id . " login succeed","username" => $username];
-
+                  
                 // dd(session()->all());
             }
 
