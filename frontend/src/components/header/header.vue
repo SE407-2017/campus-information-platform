@@ -18,7 +18,6 @@
                   <el-menu-item index="4" >{{userState}}</el-menu-item>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item :command="myInfo">个人中心</el-dropdown-item>
-                    <el-dropdown-item :command="myActivity" >我的活动</el-dropdown-item>
                     <el-dropdown-item :command="clickToLogout" >注销</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
@@ -53,11 +52,25 @@
     <div class="signupform-wrapper" v-show="signup">
         <div class="title">注册</div>
         <el-form ref="form" class="form" :model="signupform" label-width="80px">
+            <div unselectable="on" style="z-index:-1;background:#000;filter:alpha(opacity=500);opacity:.4;left:0px;top:0px;position:fixed;height:100%;width:100%;overflow:hidden;"></div>
+            <el-form-item label="头像" prop="avatar">
+                <croppa v-model="signupform.myCroppa" :width="120"
+        :height="100"></croppa>
+            </el-form-item>
             <el-form-item label="用户名">
                 <el-input v-model="signupform.username"></el-input>
             </el-form-item>
             <el-form-item label="密码">
                 <el-input v-model="signupform.password"  type="password"></el-input>
+            </el-form-item>
+            <el-form-item label="简介">
+                <el-input v-model="signupform.intro"></el-input>
+            </el-form-item>
+            <el-form-item label="邮箱">
+                <el-input v-model="signupform.email"  type="email"></el-input>
+            </el-form-item>
+            <el-form-item label="手机">
+                <el-input v-model="signupform.phone"></el-input>
             </el-form-item>
             <el-form-item>
                 <el-button type="primary" @click="onSignupSubmit">注册</el-button>
@@ -94,7 +107,11 @@ export default {
         },
        signupform: {
           username: "",
-          password: ""
+          password: "",
+          myCroppa: "",
+          intro: "",
+          email: "",
+          phone: ""
         }
     }
   },
@@ -168,38 +185,54 @@ export default {
         var that = this
         var form_username = this.signupform.username;
         var form_password = this.signupform.password;
-        this.$axios.get('/api/user/signup',{
-            params: {
-                username: form_username,
-                password: form_password
-            }
-        })
-        .then(function (response) {
-           if(response.data.status == 1){
-                that.success(SIGNUP);
-                // 注册成功后自动登录
-                that.$axios.get('/api/user/login',{
-                    params: {
-                        username: form_username,
-                        password: form_password
-                    }
-                })
-                .then(function (response) {
-                   if(response.data.status == 1){
-                        that.userState = form_username;
-                        that.isLogin = true;
-                   }
-                })
-                .catch(function (error) {
-                  console.log(error);
-                });
-           } else {
-               that.error(response.data.msg)
-           }
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
+        var form_phone = this.signupform.phone;
+        var form_email = this.signupform.email;
+        var form_intro = this.signupform.intro;
+        var fd = new FormData()
+        var that = this;
+        fd.append('username',form_username);
+        fd.append('password',form_password);
+        fd.append('email',form_email);
+        fd.append('phone',form_phone);
+        fd.append('intro',form_intro);
+        if (!this.signupform.myCroppa.hasImage()) {
+              alert('no image to upload');  
+        }
+        this.signupform.myCroppa.generateBlob(function(blob) {
+              fd.append('file',blob);
+              that.$axios.post('/api/user/signup',
+                  fd,
+                  {headers:{'Content-Type':'application/x-www-form-urlencoded'}}
+              )
+              .then(function (response) {
+                 if(response.data.status == 1){
+                      that.isLogin = true;
+                      that.signup = false;
+                      that.success(SIGNUP);
+                      // 注册成功后自动登录
+                      that.$axios.get('/api/user/login',{
+                          params: {
+                              username: form_username,
+                              password: form_password
+                          }
+                      })
+                      .then(function (response) {
+                         if(response.data.status == 1){
+                              that.userState = form_username;
+                              that.isLogin = true;
+                         }
+                      })
+                      .catch(function (error) {
+                        console.log(error);
+                      });
+                 } else {
+                     that.error(response.data.msg)
+                 }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+           })  
     },
     testapi() {
         this.$axios.get('/api/activity/add?title=test')
@@ -215,9 +248,6 @@ export default {
     },
     myInfo() {
       this.$router.push({path:'/user/info'});
-    },
-    myActivity() {
-      this.$router.push({path:'/add/activity'});
     },
     success(action) {
         if(action == 1){
@@ -275,7 +305,7 @@ export default {
         height: 285px
         background-color:#f3f3f3
         position: absolute
-        top: 190px
+        top: 90px
         left: 500px
         margin: auto auto
         width: 30%

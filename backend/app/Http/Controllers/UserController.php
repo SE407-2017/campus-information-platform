@@ -30,10 +30,16 @@ class UserController extends BaseController
         注册api
      */
     public function signup(Request $request)
-    {
+    {   
+
         $username = $request->username;
         $password = $request->password;
-
+        $email = $request->email;
+        $phone = $request->phone;
+        $intro = $request->intro;
+        $file=$request->file;
+        $filename = session("user_id") . '_' . time() . '.' . $file->clientExtension();
+        $file->move( public_path().'\resources\tempFile',$filename);
         // 检测用户名和密码是否为空
         if(!$username || !$password){
             return ["status" => 0,"msg" => "username and password can't be empty"];
@@ -55,6 +61,10 @@ class UserController extends BaseController
         $new_user = new User;
         $new_user->username = $username;
         $new_user->password = $hashed_password;
+        $new_user->email = $email;
+        $new_user->phone = $phone;
+        $new_user->intro = $intro;
+        $new_user->avatar_url = "http://" . $request->getHttpHost() ."/" .'resources/tempFile'. "/" . $filename ; 
         if($new_user->save()){
             return ["status" => 1,"msg" => "nuser " . $new_user->id . " save succeed"];
         }

@@ -5,6 +5,9 @@
              <el-form-item label="活动名称" prop="name">
                 <el-input v-model="activityForm.name"></el-input>
              </el-form-item>
+             <el-form-item label="海报" prop="poster">
+                <croppa v-model="activityForm.myCroppa"></croppa>
+              </el-form-item>
              <el-form-item label="活动地点" prop="region">
                 <el-select v-model="activityForm.region" placeholder="请选择活动地点">
                   <el-option label="上海" value="上海"></el-option>
@@ -46,12 +49,16 @@ export default {
           name: '',
           region: '',
           date: '',
-          desc: ''
+          desc: '',
+          myCroppa: {}
         },
         rules: {
           name: [
             { required: true, message: '请输入活动名称', trigger: 'blur' },
             { min: 3, max: 20, message: '长度在 3 到 20 个字符', trigger: 'blur' }
+          ],
+          poster: [
+            { required: true, message: '请输入活动名称', trigger: 'blur' }
           ],
           region: [
             { required: true, message: '请选择活动区域', trigger: 'change' }
@@ -71,32 +78,41 @@ export default {
   methods: {
       submitForm: function(activityForm){
           // activityForm.date为Date对象类型
-          var year = activityForm.date.getFullYear()
-          var month = activityForm.date.getMonth()+1
-          var day = activityForm.date.getDate()
+          var year = activityForm.date.getFullYear();
+          var month = activityForm.date.getMonth()+1;
+          var day = activityForm.date.getDate();
+          var fd = new FormData()
+          var uploadUrl = "/api/activity/add?" + "title="+activityForm.name+"&desc="+activityForm.desc+"&time="+year+"-"+month+"-"+day+"&place="+activityForm.region
+          if (!this.activityForm.myCroppa.hasImage()) {
+            alert('no image to upload')
+            
+          }
           var that = this;
-          this.$axios.get('/api/activity/add',{
-            params: {
-              title: activityForm.name,
-              desc: activityForm.desc,
-              time: year+"-"+month+"-"+day,
-              place: activityForm.region
-            }
-          })
-          .then(function (response) {
-              console.log(response.data)
-              if(response.data.status){
-                  that.success();
-                  // 前端路由跳转
-                  that.$router.push({path:'/'})
-              } else{
-                  that.error(response.data.msg)
-                  that.$router.push({path:'/'});
-              }
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
+          this.activityForm.myCroppa.generateBlob(function(blob) {
+              fd.append('file',blob);
+              
+              that.$axios.post(uploadUrl,fd,
+                {headers:{'Content-Type':'application/x-www-form-urlencoded'}})
+              .then(function (response) {
+                  console.log(response.data)
+                  if(response.data.status){
+                      that.success();
+                      // 前端路由跳转
+                      that.$router.push({path:'/'})
+                  } else{
+                      that.error(response.data.msg)
+                      that.$router.push({path:'/'});
+                  }
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+           }) // 80% compressed jpeg file
+    
+          // var xhr = new XMLHttpRequest;
+          // xhr.open('POST', '/asd', true);
+          // xhr.send(fd);
+
       },
       resetForm: function(){
           this.$router.push({path:'/'})
@@ -115,6 +131,7 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+
 .addActivity
   .addActivity-wrapper
       width: 600px

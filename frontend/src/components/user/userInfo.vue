@@ -25,7 +25,7 @@
         <div class="title">我的信息</div>
         <div class="division"></div>
         <div class="content">
-            <div class="avatar"></div>
+            <div class="avatar" :style="{ backgroundImage: 'url(' + userInfo.avatar_url+ ')' }"></div>
             <div class="main">
               <div class="username">用户名 ：{{userInfo.username}}</div>
               <div class="email">邮箱 ： {{userInfo.email}}</div>
@@ -38,7 +38,7 @@
 
   <div class="activity-wrapper" v-show="isMyAct">
       <div class="activity-item" v-for="activity in activityArr">
-         <div class="avatar" @click="showDetail(activity.id)"></div>
+         <div class="poster" @click="showDetail(activity.id)" :style="{ backgroundImage: 'url(' + activity.poster+ ')'}"></div>
          <div class="content">
             <div class="title" @click="showDetail(activity.id)" target="_blank">{{activity.title}}</div>
             <div class="time">时间：{{activity.time}}</div>
@@ -69,6 +69,7 @@ export default {
         userInfo.email = response.data[0].email
         userInfo.phone = response.data[0].phone
         userInfo.intro = response.data[0].intro
+        userInfo.avatar_url = response.data[0].avatar_url
         that.userInfo = userInfo
     })
     .catch(function (error) {
@@ -161,7 +162,7 @@ export default {
         .activity-item
             margin-bottom: 30px
             display: inline-block
-            .avatar
+            .poster
                 background-image: url("avatar.jpg")
                 background-size: 60px 60px
                 width: 60px

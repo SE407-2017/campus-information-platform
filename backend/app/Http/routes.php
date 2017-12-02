@@ -19,7 +19,7 @@ Route::get('api/isLogin',"BaseController@isLogin");
 
 // 用户路由
 Route::group(['prefix' => 'api/user'], function () {
-    Route::get('signup',"UserController@signup");
+    Route::post('signup',"UserController@signup");
     Route::get('login',"UserController@login");
     Route::get('logout',"UserController@logout");
     // 个人详情路由
@@ -45,7 +45,7 @@ Route::group(['prefix' => 'api/admin'], function () {
 
 // 活动路由
 Route::group(['prefix' => 'api/activity'], function () {
-    Route::get('add',"ActivityController@add");
+    Route::post('add',"ActivityController@add");
     Route::get('update',"ActivityController@update");
     Route::get('read',"ActivityController@read");
     Route::get('remove',"ActivityController@remove");

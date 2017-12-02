@@ -2,7 +2,7 @@
   <div class="detailActivity">
     <div class="main-wrapper">
         <div class="title">{{detail.title}}</div>
-        <div class="avatar"></div>
+        <div class="poster" :style="{ backgroundImage: 'url(' + detail.poster+ ')'}"></div>
         <div class="division"></div>
         <div class="description">{{detail.description}}</div>
         <div class="division"></div>
@@ -54,7 +54,8 @@ export default {
             title: "",
             description:"",
             time: "",
-            place: ""
+            place: "",
+            poster: ""
         },
         comment: '',
         commentArr: [],
@@ -68,6 +69,7 @@ export default {
     this.detail.description = data.desc;
     this.detail.place = data.place;
     this.detail.time = data.time;
+    this.detail.poster = data.poster;
     var that = this
     // 不知道为什么直接取data.applyStatus取不到，暂时通过延时来解决
     setTimeout(function() {
@@ -179,8 +181,7 @@ export default {
             margin-top: 50px
             font-size: 20px
             text-align: center
-        .avatar
-            background-image: url("avatar.jpg")
+        .poster
             background-size: 150px 150px
             width: 150px
             height: 150px

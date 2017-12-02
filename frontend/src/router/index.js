@@ -4,7 +4,7 @@ import ListActivity from '../components/activity/listActivity'
 import AddActivity from '../components/activity/addActivity'
 import DetailActivity from '../components/activity/detailActivity'
 import UserInfo from '../components/user/userInfo'
-
+import 'vue-croppa/dist/vue-croppa.css'
 Vue.use(Router)
 
 export default new Router({

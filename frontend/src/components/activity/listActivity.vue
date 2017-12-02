@@ -2,7 +2,7 @@
   <div class="activity">
      <div class="activity-wrapper">
         <div class="activity-item" v-for="activity in activityArr">
-            <div class="avatar" @click="showDetail(activity.id)"></div>
+            <div class="poster" @click="showDetail(activity.id)" :style="{ backgroundImage: 'url(' + activity.poster+ ')' }"></div>
             <div class="content">
                 <div class="title" @click="showDetail(activity.id)" target="_blank">{{activity.title}}</div>
                 <div class="time">时间：{{activity.time}}</div>
@@ -38,6 +38,7 @@ export default {
     this.$axios.get('/api/activity/read')
         .then(function (response) {
             if(response.data.status){
+                console.log(response.data.data)
                 that.totalPage = response.data.page
                 that.activityArr = response.data.data
             }
@@ -104,8 +105,7 @@ export default {
         .activity-item
             flex: 0 0 25%
             margin-bottom: 30px
-            .avatar
-                background-image: url("avatar.jpg")
+            .poster
                 background-size: 150px 150px
                 width: 150px
                 height: 150px

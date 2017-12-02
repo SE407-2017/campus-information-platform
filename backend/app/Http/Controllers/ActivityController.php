@@ -12,8 +12,7 @@ class ActivityController extends BaseController
      */
     public function add(Request $request){
         // $this->isLogin()调用父控制器的方法
-        // 检查用户是否登录
-        // dd($this->isLogin()["user_id"]);
+        // public_path()方法返回值为 G:\campus-information-platform\backend\public
         if($this->isLogin()) {
              $new_activity = new Activity;
              $new_activity->title = $request->title;
@@ -21,6 +20,10 @@ class ActivityController extends BaseController
              $new_activity->time = $request->time;
              $new_activity->place = $request->place;
              $new_activity->user_id = session("user_id");
+             $file=$request->file('file');
+             $filename = session("user_id") . '_' . time() . '.' . $file->clientExtension();
+             $file->move( public_path().'\resources\tempFile',$filename);
+             $new_activity->poster = "http://" . $request->getHttpHost() ."/" .'resources'. "/tempFile/" . $filename ; 
              return $new_activity->save()?
                  ["status" => 1,"msg" => "create activities succeed"]:
                  ["status" => 0,"msg" => "db insert failed"];

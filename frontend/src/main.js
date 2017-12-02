@@ -5,11 +5,12 @@ import App from './App'
 import router from './router'
 import ElementUI from 'element-ui'
 import axios from 'axios'
-
+ import Croppa from 'vue-croppa'
 
 Vue.config.productionTip = false
 Vue.prototype.$axios=axios
 Vue.use(ElementUI)
+Vue.use(Croppa) 
 
 
 /* eslint-disable no-new */
