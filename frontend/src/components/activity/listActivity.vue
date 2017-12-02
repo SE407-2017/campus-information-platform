@@ -1,5 +1,13 @@
 <template>
   <div class="activity">
+      <div class="slider" v-show="activityArr!=[]">
+            <h2 class="title">热门活动</h2>
+            <el-carousel height="200px" type="card">
+              <el-carousel-item v-for="(activity,index) in activityArr" :key="item" v-if="index<4">
+                <div class="poster" @click="showDetail(activity.id)" :style="{ backgroundImage: 'url(' + activity.poster+ ')' }"></div>
+              </el-carousel-item>
+            </el-carousel>
+      </div>
      <div class="activity-wrapper">
         <div class="activity-item" v-for="activity in activityArr">
             <div class="poster" @click="showDetail(activity.id)" :style="{ backgroundImage: 'url(' + activity.poster+ ')' }"></div>
@@ -96,9 +104,33 @@ export default {
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
+@import url("//unpkg.com/element-ui@2.0.7/lib/theme-chalk/index.css")
 .activity
     margin: 80px 60px 0px 60px
     position: relative
+    .slider
+      display: relative
+      width: 700px
+      margin: 50px auto 50px auto
+      .title
+          font-size: 24px
+          font-weight: 500
+      .el-carousel__item
+          z-index: -1
+          color: red
+          opacity: 0.75
+          line-height: 150px
+          margin: 0
+          .poster
+                background-size: 350px 200px
+                width: 350px
+                height: 200px
+                display: inline-block
+                cursor: pointer
+        .el-carousel__item:nth-child(2n) 
+           background-color: #99a9bf
+        .el-carousel__item:nth-child(2n+1) 
+           background-color: #d3dce6
     .activity-wrapper
         display: flex
         flex-wrap: wrap

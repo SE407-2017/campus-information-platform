@@ -302,7 +302,6 @@ export default {
     .loginform-wrapper,.signupform-wrapper
         padding-left: 40px
         padding-right: 40px
-        height: 285px
         background-color:#f3f3f3
         position: absolute
         top: 90px
@@ -325,6 +324,11 @@ export default {
             z-index: 2
             position: relative
             top: 50px
+            
+      .loginform-wrapper
+          height: 285px
+      .signupform-wrapper
+          height: 700px
     .message-wrapper
         display: none
     

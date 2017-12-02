@@ -136,6 +136,7 @@ class UserController extends BaseController
      
       return  DB::table('user_apply_activities')
             ->join('activities', 'activities.id', '=', 'user_apply_activities.activity_id')
+            ->where("user_apply_activities.user_id",$user_id)
             ->get();
     }
 

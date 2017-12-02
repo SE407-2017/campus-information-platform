@@ -9,12 +9,12 @@
         <div class="comment-wrapper">
             <p class="title">评论</p>
             <div class="comment" v-for="comment in commentArr">
-                <div class="poster"></div>
+                <div class="avatar" :style="{ backgroundImage: 'url(' + comment.avatar_url+ ')'}"></div>
                 <div class="content">
-                    <div class="username">美玉</div>
+                    <div class="username">{{comment.username}}</div>
                     <div class="text">{{comment.comment}}</div>
                 </div>
-                <div class="time">5天前</div>
+                <div class="time">{{comment.created_at}}</div>
             </div>
             <div class="commentBox">
                 <el-input
@@ -202,9 +202,8 @@ export default {
                 margin-left: 5px
             .comment
                 margin-top: 20px
-                .poster
+                .avatar
                     display: inline-block
-                    background-image: url("avatar.jpg")
                     background-size: 50px 50px
                     width: 50px
                     height: 50px

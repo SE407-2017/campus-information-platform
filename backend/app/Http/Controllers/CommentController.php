@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Comment;
+use DB;
 class CommentController extends BaseController
 {
     /** 
@@ -33,8 +34,11 @@ class CommentController extends BaseController
      */
     public function read(Request $request){  
         if($actid = $request->actid) {
-            $activity = Comment::where("activity_id",$actid)->get();
-            return  ["status" => 1,"data" => $activity];
+            $comment = DB::table('comments')
+            ->where("comments.activity_id",$actid)
+            ->join('users', 'users.id', '=', 'comments.user_id')
+            ->get();
+            return  ["status" => 1,"data" => $comment];
         } else {
             return ["status" => 0,"msg" => "You need to upload activity id"];
         }
