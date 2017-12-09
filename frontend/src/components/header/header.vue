@@ -24,7 +24,6 @@
               </el-menu-item>
               <el-menu-item index="4" @click="clickToLogin" v-show="!isLogin">登录</el-menu-item>
               <el-menu-item index="6" @click="clickToSignup">注册</el-menu-item>
-              <el-menu-item index="7" @click="testapi">测试</el-menu-item>
           </div>
         </el-menu>
     </div>
@@ -220,6 +219,8 @@ export default {
                          if(response.data.status == 1){
                               that.userState = form_username;
                               that.isLogin = true;
+                         } else{
+                           that.error("注册失败");
                          }
                       })
                       .catch(function (error) {
@@ -235,15 +236,6 @@ export default {
                 console.log(error);
               });
            })  
-    },
-    testapi() {
-        this.$axios.get('/api/activity/add?title=test')
-        .then(function (response) {
-           console.log(response.data)
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
     },
     goHomePage() {
       this.$router.push({path:'/'});
